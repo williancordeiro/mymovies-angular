@@ -1,0 +1,14 @@
+<header class="flex flex-row bg-black py-2.5 justify-center items-center gap-6">
+    <div class="bg-red-600 rounded-lg p-1">
+        <h1 class="font-extrabold">My Movies</h1>
+    </div>
+    <div class="flex flex-row w-130 rounded-lg hover:outline-1 hover:outline-red-600">
+        <input type="search" name="search" id="search" class="rounded-s-lg bg-white p-1 w-full outline-0" />
+        <button type="submit" class="bg-white p-1 rounded-e-lg cursor-pointer">
+            <fa-icon [icon]="faMagnifyingGlass" class="text-neutral-300 hover:text-black transition duration-300 ease-in-out" />
+        </button>
+    </div>
+    <div>
+        <button class="text-white">Login/Register</button>
+    </div>
+</header>
