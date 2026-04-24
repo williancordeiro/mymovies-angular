@@ -1,0 +1,91 @@
+<div 
+    class="fixed inset-0 bg-black/50 z-40 flex justify-center items-center"
+    (click)="closeForm.emit()"
+>
+    <div 
+        class="bg-black rounded-lg p-6 w-full max-w-md z-50 shadow-xl border border-white" 
+        (click)="$event.stopPropagation()"
+    >
+    <div class="text-white text-center mb-5">
+        <h1 class="text-3xl uppercase font-extrabold text-red-600">Criar conta</h1>
+        <h3 class="font-sans font-semibold text-sm text-white/80">Seus Filmes favoritos em um unico lugar!</h3>
+    </div>
+    <form action="" class="text-white text-lg">
+        <div class="flex flex-col py-2 my-1">
+            <label 
+                for="username"
+            >
+                Nome de usuário:
+            </label>
+            <input
+                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out"
+                type="text" 
+                id="username" 
+                name="username"
+                placeholder="Fulano41" 
+            />
+        </div>
+        <div class="flex flex-col py-2 my-1">
+            <label 
+                for="email"
+            >
+                Email:
+            </label>
+            <input
+                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out"
+                type="email" 
+                id="email" 
+                name="email"
+                placeholder="email@exemplo.com" 
+            />
+        </div>
+        <div class="flex flex-col py-2 my-1">
+            <label 
+                for="password"
+            >
+                Senha:
+            </label>
+            <input
+                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out" 
+                type="password" 
+                id="password" 
+                name="password"
+                placeholder="* * * * * *"
+            />
+        </div>
+        <div class="flex flex-col py-2 my-1">
+            <label 
+                for="confirm_password"
+            >
+                Confirmar senha:
+            </label>
+            <input
+                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out" 
+                type="password" 
+                id="confirm_password" 
+                name="confirm_password"
+                placeholder="* * * * * *"
+            />
+        </div>
+        <div class="flex flex-col py-2 mt-3">
+            <button 
+                type="submit" 
+                class="bg-red-600 rounded-lg cursor-pointer uppercase font-bold text-2xl py-2 hover:bg-red-700 hover:text-3xl transition-all duration-150 ease-in-out"
+            >
+                Criar conta
+            </button>
+        </div>
+    </form>
+    <div>
+        <p class="text-sm text-neutral-300 mt-4 text-center">
+            Já tem uma conta? 
+            <span 
+                class="text-red-600 cursor-pointer hover:underline" 
+                (click)="goToLogin.emit()"
+            >
+                Entre aqui
+            </span>
+        </p>
+    </div>
+    </div>
+</div>

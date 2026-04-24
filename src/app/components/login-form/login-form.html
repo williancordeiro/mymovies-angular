@@ -1,0 +1,63 @@
+<div 
+    class="fixed inset-0 bg-black/50 z-40 flex justify-center items-center"
+    (click)="closeForm.emit()"
+>
+    <div 
+        class="bg-black rounded-lg p-6 w-full max-w-md z-50 shadow-xl border border-white" 
+        (click)="$event.stopPropagation()"
+    >
+    <div class="text-red-600 flex flex-col items-center justify-center text-4xl uppercase font-extrabold mb-5">
+        <h1>M<span class="text-2xl">y</span> M<span class="text-2xl">ovies</span></h1>
+        <h3 class="text-sm normal-case text-white/80 font-semibold">Seus filmes Favoritos</h3>
+    </div>
+    <form action="" class="text-white text-lg">
+        <div class="flex flex-col py-2 my-1">
+            <label 
+                for="email"
+            >
+                Email:
+            </label>
+            <input
+                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out"
+                type="email" 
+                id="email" 
+                name="email"
+                placeholder="email@exemplo.com" 
+            />
+        </div>
+        <div class="flex flex-col py-2 my-1">
+            <label 
+                for="password"
+            >
+                Senha:
+            </label>
+            <input
+                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out" 
+                type="password" 
+                id="password" 
+                name="password"
+                placeholder="* * * * * *" 
+            />
+        </div>
+        <div class="flex flex-col py-2 mt-3">
+            <button 
+                type="submit" 
+                class="bg-red-600 rounded-lg cursor-pointer uppercase font-bold text-2xl py-2 hover:bg-red-700 hover:text-3xl transition-all duration-150 ease-in-out"
+            >
+                Entrar
+            </button>
+        </div>
+    </form>
+    <div>
+        <p class="text-sm text-neutral-300 mt-4 text-center">
+            Ainda não tem uma conta? 
+            <span 
+                class="text-red-600 cursor-pointer hover:underline" 
+                (click)="goToRegister.emit()"
+            >
+                Cadastre-se
+            </span>
+        </p>
+    </div>
+    </div>
+</div>
