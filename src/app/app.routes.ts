@@ -8,7 +8,8 @@ export const routes: Routes = [
     component: Home,
   },
   {
-    path: '/admin',
+    path: 'admin',
     component: Admin,
+    // colocar guard na rota
   },
 ];
