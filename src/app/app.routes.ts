@@ -5,5 +5,10 @@ export const routes: Routes = [
     {
         path: '',
         component: Home,
-    }
+    },
+    {
+        path: 'home',
+        redirectTo: '',
+        pathMatch: 'full',
+    },
 ];
