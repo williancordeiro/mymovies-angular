@@ -1,63 +1,74 @@
 <div 
-    class="fixed inset-0 bg-black/50 z-40 flex justify-center items-center"
+    class="fixed inset-0 bg-background_black/80 z-40 flex justify-center items-center p-4"
     (click)="closeForm.emit()"
 >
     <div 
-        class="bg-black rounded-lg p-6 w-full max-w-md z-50 shadow-xl border border-white" 
+        class="bg-[#121212] rounded-xl p-8 w-full max-w-[420px] z-50 shadow-2xl border border-neutral-900 flex flex-col gap-8" 
         (click)="$event.stopPropagation()"
     >
-    <div class="text-red-600 flex flex-col items-center justify-center text-4xl uppercase font-extrabold mb-5">
-        <h1>M<span class="text-2xl">y</span> M<span class="text-2xl">ovies</span></h1>
-        <h3 class="text-sm normal-case text-white/80 font-semibold">Seus filmes Favoritos</h3>
-    </div>
-    <form action="" class="text-white text-lg">
-        <div class="flex flex-col py-2 my-1">
-            <label 
-                for="email"
-            >
-                Email:
-            </label>
-            <input
-                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out"
-                type="email" 
-                id="email" 
-                name="email"
-                placeholder="email@exemplo.com" 
-            />
+        <div class="flex flex-col items-center justify-center pt-4">
+            <h1 class="text-accent font-bold text-4xl mb-1 tracking-tight">myMovies</h1>
         </div>
-        <div class="flex flex-col py-2 my-1">
-            <label 
-                for="password"
-            >
-                Senha:
-            </label>
-            <input
-                class="border-b rounded border-red-600 bg-white/10 p-2 outline-0 hover:border-b-3 focus:border-b-3 transition-all duration-100 ease-in-out" 
-                type="password" 
-                id="password" 
-                name="password"
-                placeholder="* * * * * *" 
-            />
+
+        <form action="" class="flex flex-col gap-5">
+            <!-- Email -->
+            <div class="flex flex-col gap-2">
+                <label for="email" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                    Endereço de email
+                </label>
+                <div class="relative flex items-center">
+                    <fa-icon [icon]="faEnvelope" class="absolute left-4 text-neutral-500"></fa-icon>
+                    <input
+                        class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200"
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        placeholder="name@example.com" 
+                    />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-center">
+                    <label for="password" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                        Senha
+                    </label>
+                </div>
+                <div class="relative flex items-center">
+                    <fa-icon [icon]="faLock" class="absolute left-4 text-neutral-500"></fa-icon>
+                    <input
+                        class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200" 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="••••••••" 
+                    />
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="mt-4">
+                <button 
+                    type="submit" 
+                    class="w-full bg-accent hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-3.5 transition-all duration-200"
+                >
+                    Entrar
+                </button>
+            </div>
+        </form>
+
+        <div class="text-center pb-2">
+            <p class="text-neutral-400 text-sm">
+                Não tem uma conta? 
+                <button 
+                    type="button"
+                    class="text-accent font-semibold hover:underline cursor-pointer" 
+                    (click)="goToRegister.emit()"
+                >
+                    Cadastre-se
+                </button>
+            </p>
         </div>
-        <div class="flex flex-col py-2 mt-3">
-            <button 
-                type="submit" 
-                class="bg-red-600 rounded-lg cursor-pointer uppercase font-bold text-2xl py-2 hover:bg-red-700 hover:text-3xl transition-all duration-150 ease-in-out"
-            >
-                Entrar
-            </button>
-        </div>
-    </form>
-    <div>
-        <p class="text-sm text-neutral-300 mt-4 text-center">
-            Ainda não tem uma conta? 
-            <span 
-                class="text-red-600 cursor-pointer hover:underline" 
-                (click)="goToRegister.emit()"
-            >
-                Cadastre-se
-            </span>
-        </p>
-    </div>
     </div>
 </div>
