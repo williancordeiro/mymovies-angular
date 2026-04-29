@@ -1,0 +1,15 @@
+<div class="relative inline-block">
+    <button class="cursor-pointer" (click)="toggle()">
+        {{ title() }}
+    </button>
+
+    @if (isOpen()) {
+        <ul class="absolute right-0 mt-2 py-2 w-48 bg-background_default rounded-md shadow-lg z-50">
+            @for(item of options(); track item.label) {
+                <li (click)="itemSelected(item)" class="cursor-pointer px-4 py-2 text-white">
+                    {{ item.label }}
+                </li>
+            }
+        </ul>
+    }
+</div>

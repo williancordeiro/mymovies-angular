@@ -15,6 +15,12 @@ export class Auth {
 
   currentUser = signal<AuthUser | null>(null);
 
+  constructor() {
+    const token = this.getToken();
+    if (token)
+      this.decodeAndStoreUser(token);
+  }
+
   login(credentials: { email: string; password: string }) {
     return this.http.post<{ token: string }>(`${this.API_URL}/auth/login`, credentials).pipe(
       tap(response => {

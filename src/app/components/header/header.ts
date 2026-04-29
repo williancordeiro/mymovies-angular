@@ -5,11 +5,14 @@ import { Logotipo } from "../logotipo/logotipo";
 import { LoginForm } from "../login-form/login-form";
 import { RegisterForm } from "../register-form/register-form";
 import { Auth } from '../../core/services/auth';
+import { DropdownMenu } from "../dropdown-menu/dropdown-menu";
+import { DropdownModel } from '../../core/models/dropdown.model';
+import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-header',
-  imports: [FaIconComponent, Logotipo, LoginForm, RegisterForm],
+  imports: [NgClass, FaIconComponent, Logotipo, LoginForm, RegisterForm, DropdownMenu],
   templateUrl: './header.html',
 })
 export class Header {
@@ -23,6 +26,22 @@ export class Header {
 
   isLoginFormOpen = signal(false);
   isRegisterFormOpen = signal(false);
+
+  userActions = [
+    { label: 'Profile', value: 'profile' },
+    { label: 'Settings', value: 'settings' },
+    { label: 'Logout', value: 'logout' }
+  ]
+
+  handleUserAction(opt: DropdownModel) {
+    if (opt.value === 'logout') {
+      this.authService.logout();
+    }
+  }
+
+  toggleLoginForm() {
+    this.isLoginFormOpen.update(v => !v);
+  }
 
   switchToRegister() {
     this.isLoginFormOpen.set(false);
