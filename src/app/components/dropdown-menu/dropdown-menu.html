@@ -4,12 +4,8 @@
     </button>
 
     @if (isOpen()) {
-        <ul class="absolute right-0 mt-2 py-2 w-48 bg-background_default rounded-md shadow-lg z-50">
-            @for(item of options(); track item.label) {
-                <li (click)="itemSelected(item)" class="cursor-pointer px-4 py-2 text-white">
-                    {{ item.label }}
-                </li>
-            }
+        <ul class="absolute right-0 mt-2 py-2 w-48 bg-background_default border border-black/40 rounded-md shadow-lg z-50">
+            <ng-content></ng-content>
         </ul>
     }
 </div>

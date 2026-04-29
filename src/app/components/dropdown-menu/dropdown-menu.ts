@@ -9,9 +9,6 @@ import { DropdownModel } from '../../core/models/dropdown.model';
 export class DropdownMenu {
 
   title = input<string>('Select');
-  options = input.required<DropdownModel[]>();
-
-  optionSelected = output<DropdownModel>();
 
   isOpen = signal(false);
 
@@ -19,11 +16,6 @@ export class DropdownMenu {
 
   toggle() {
     this.isOpen.update(v => !v);
-  }
-
-  itemSelected(option: DropdownModel) {
-    this.optionSelected.emit(option);
-    this.isOpen.set(false);
   }
 
   @HostListener('document:click', ['$event'])

@@ -15,9 +15,17 @@
         <app-dropdown-menu
             [ngClass]="{ 'hidden': !userLoggedIn() }"
             [title]="userName() || ''"
-            [options]="userActions"
-            (optionSelected)="handleUserAction($event)"
-        />
+        >
+            <li class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out">
+                <span>My Profile</span>
+            </li>
+            <li class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out">
+                <span>Settings</span>
+            </li>
+            <li class="cursor-pointer p-1 hover:bg-red-300/30 hover:text-red-600 hover:font-semibold transition duration-200 ease-in-out">
+                <span (click)="logout()">Logout</span>
+            </li>
+        </app-dropdown-menu>
         <button
             class="block bg-accent hover:brightness-110 px-6 py-2 rounded-md font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer"
             [ngClass]="{ 'hidden': userLoggedIn() }"
@@ -30,12 +38,9 @@
 @if (isLoginFormOpen()) {
     <app-login-form 
         (closeForm)="isLoginFormOpen.set(false)"
-        (loginSucess)="isLoginFormOpen.set(false)"
+        (loginSuccess)="isLoginFormOpen.set(false)"
         (goToRegister)="switchToRegister()"
     />
-}
-@if (isLoginFormOpen()) {
-<app-login-form (closeForm)="isLoginFormOpen.set(false)" (goToRegister)="switchToRegister()" />
 }
 
 @if (isRegisterFormOpen()) {

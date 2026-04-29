@@ -12,8 +12,12 @@ services:
     container_name: nginx
     ports:
       - "8080:80"
+    env_file:
+      - .env
     volumes:
       - dist-volume:/usr/share/nginx/html
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       angular:
         condition: service_completed_successfully

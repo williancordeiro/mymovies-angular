@@ -8,6 +8,7 @@ import { Auth } from '../../core/services/auth';
 import { DropdownMenu } from "../dropdown-menu/dropdown-menu";
 import { DropdownModel } from '../../core/models/dropdown.model';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { NgClass } from '@angular/common';
 })
 export class Header {
   private authService = inject(Auth);
-
+  private router = inject(Router);
+  isLoggedIn = false;
 
   faMagnifyingGlass = faMagnifyingGlass;
 
@@ -33,10 +35,9 @@ export class Header {
     { label: 'Logout', value: 'logout' }
   ]
 
-  handleUserAction(opt: DropdownModel) {
-    if (opt.value === 'logout') {
-      this.authService.logout();
-    }
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 
   toggleLoginForm() {

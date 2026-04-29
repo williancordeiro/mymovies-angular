@@ -22,7 +22,7 @@ export class LoginForm {
   private authService = inject(Auth);
   private router = inject(Router);
 
-  loginSucess = output<void>();
+  loginSuccess = output<void>();
   goToRegister = output<void>();
 
   loginForm = this.fb.group({
@@ -34,7 +34,7 @@ export class LoginForm {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.getRawValue()).subscribe({
         next: () => {
-          this.loginSucess.emit();
+          this.loginSuccess.emit();
           this.router.navigate(['/']);
         },
         error: (err) => {

@@ -1,9 +1,9 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { AuthUser, JwtPayload } from '../models/auth.user';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +47,7 @@ export class Auth {
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
+    this.currentUser.set(null);
   }
 
   isLoggedIn() {
