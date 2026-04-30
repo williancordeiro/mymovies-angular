@@ -1,17 +1,18 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { Admin } from './pages/admin/admin';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: Home,
-    },
-    {
-        path: 'home',
-        redirectTo: '',
-        pathMatch: 'full',
-    },
+  {
+    path: '',
+    component: Home,
+  },
+  {
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
   {
     path: '',
     component: Home,
@@ -19,6 +20,6 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: Admin,
-    // colocar guard na rota
+    canActivate: [authGuard],
   },
 ];
