@@ -1,15 +1,14 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Logotipo } from "../logotipo/logotipo";
-import { LoginForm } from "../login-form/login-form";
-import { RegisterForm } from "../register-form/register-form";
+import { Logotipo } from '../logotipo/logotipo';
+import { LoginForm } from '../login-form/login-form';
+import { RegisterForm } from '../register-form/register-form';
 import { Auth } from '../../core/services/auth';
-import { DropdownMenu } from "../dropdown-menu/dropdown-menu";
+import { DropdownMenu } from '../dropdown-menu/dropdown-menu';
 import { DropdownModel } from '../../core/models/dropdown.model';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-header',
@@ -25,6 +24,7 @@ export class Header {
 
   userLoggedIn = computed(() => !!this.authService.currentUser());
   userName = computed(() => this.authService.currentUser()?.username);
+  isAdmin = computed(() => this.authService.currentUser()?.admin);
 
   isLoginFormOpen = signal(false);
   isRegisterFormOpen = signal(false);
@@ -32,8 +32,8 @@ export class Header {
   userActions = [
     { label: 'Profile', value: 'profile' },
     { label: 'Settings', value: 'settings' },
-    { label: 'Logout', value: 'logout' }
-  ]
+    { label: 'Logout', value: 'logout' },
+  ];
 
   logout() {
     this.authService.logout();
@@ -41,7 +41,7 @@ export class Header {
   }
 
   toggleLoginForm() {
-    this.isLoginFormOpen.update(v => !v);
+    this.isLoginFormOpen.update((v) => !v);
   }
 
   switchToRegister() {
@@ -53,5 +53,4 @@ export class Header {
     this.isLoginFormOpen.set(true);
     this.isRegisterFormOpen.set(false);
   }
-
 }
