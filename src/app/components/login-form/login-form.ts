@@ -5,6 +5,7 @@ import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '../../core/services/auth';
 import { Router } from '@angular/router';
 import { FlashMessages } from '../flash-message/flash-message';
+import { FlashService } from '../../core/services/flash';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class LoginForm {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(Auth);
   private router = inject(Router);
+  private flashService = inject(FlashService);
 
   loginSuccess = output<void>();
   goToRegister = output<void>();
@@ -35,8 +37,11 @@ export class LoginForm {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.getRawValue()).subscribe({
         next: () => {
-          this.loginSuccess.emit();
-          this.router.navigate(['/']);
+          setTimeout(() => {
+            this.flashService.clear();
+            this.loginSuccess.emit();
+            this.router.navigate(['/']);
+          }, 2000);
         },
         error: (err) => {
           console.error('Login failed', err);
