@@ -4,7 +4,10 @@
     </button>
 
     @if (isOpen()) {
-        <ul class="absolute right-0 mt-2 py-2 w-48 bg-background_default border border-black/40 rounded-md shadow-lg z-50">
+        <ul 
+            class="absolute mt-2 py-2 w-48 bg-background_default border border-black/40 rounded-md shadow-lg z-50"
+            [ngClass]="{ '-left-10': align() === 'left', '-right-10': align() === 'right' }"
+        >
             <ng-content></ng-content>
         </ul>
     }

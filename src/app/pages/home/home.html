@@ -1,11 +1,5 @@
 <div class="bg-background_default h-screen flex flex-col">
     <div class="text-on-surface p-stack-lg">
-        @if (authService.currentUser(); as user) {
-            <h1 class="mt-12 ml-12 font-headline text-display-md text-accent">
-                Você está logado como: {{ user.admin == 1 ? 'ADMINISTRADOR' : 'USUÁRIO COMUM' }}
-            </h1>
-        }
-
         <h1 class="mt-6 ml-12 font-headline text-display-lg text-secondary">
             Aqui teremos uma lista de filmes nas proximas atualizacoes!
         </h1>
