@@ -11,6 +11,8 @@
             <h3 class="text-neutral-400 text-[10px] tracking-[0.2em] uppercase text-center mt-1">Seus filmes favoritos em um único lugar!</h3>
         </div>
 
+        <app-flash-message [isGlobal]="false" />
+
         <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="flex flex-col gap-5">
             <!-- Email -->
             <div class="flex flex-col gap-2">

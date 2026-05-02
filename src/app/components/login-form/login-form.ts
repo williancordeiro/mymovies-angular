@@ -4,11 +4,12 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '../../core/services/auth';
 import { Router } from '@angular/router';
+import { FlashMessages } from '../flash-message/flash-message';
 
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, FaIconComponent],
+  imports: [ReactiveFormsModule, FaIconComponent, FlashMessages],
   templateUrl: './login-form.html',
 })
 
