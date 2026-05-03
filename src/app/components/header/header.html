@@ -1,14 +1,72 @@
-<header class="flex flex-row bg-black py-2.5 justify-center items-center gap-6">
-    <div class="bg-red-600 rounded-lg p-1">
-        <h1 class="font-extrabold">My Movies</h1>
-    </div>
-    <div class="flex flex-row w-130 rounded-lg hover:outline-1 hover:outline-red-600">
-        <input type="search" name="search" id="search" class="rounded-s-lg bg-white p-1 w-full outline-0" />
-        <button type="submit" class="bg-white p-1 rounded-e-lg cursor-pointer">
-            <fa-icon [icon]="faMagnifyingGlass" class="text-neutral-300 hover:text-black transition duration-300 ease-in-out" />
-        </button>
-    </div>
-    <div>
-        <button class="text-white">Login/Register</button>
-    </div>
+<header
+  class="flex flex-row bg-background_black py-4 items-center justify-evenly border-b border-neutral-900"
+>
+  <div class="cursor-pointer" routerLink="/">
+    <app-logotipo></app-logotipo>
+  </div>
+  <div class="flex flex-row w-full max-w-[700px] rounded-lg">
+    <input
+      type="search"
+      name="search"
+      id="search"
+      placeholder="Pesquisar filmes..."
+      class="rounded-s-lg bg-neutral-100 text-neutral-900 p-2 w-full outline-none focus:ring-2 focus:ring-accent"
+    />
+    <button
+      type="submit"
+      class="bg-neutral-100 p-2 rounded-e-lg cursor-pointer border-l border-neutral-300"
+    >
+      <fa-icon
+        [icon]="faMagnifyingGlass"
+        class="text-neutral-600 hover:text-accent transition duration-300 ease-in-out"
+      ></fa-icon>
+    </button>
+  </div>
+  <div class="flex gap-4 items-center text-white">
+    <app-dropdown-menu align="left" [ngClass]="{ hidden: !userLoggedIn() }" [title]="userName() || ''">
+      <li
+        class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
+      >
+        <span>My Profile</span>
+      </li>
+      <li
+        class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
+      >
+        <span>Settings</span>
+      </li>
+      <li
+        class="cursor-pointer p-1 hover:bg-red-300/30 hover:text-red-600 hover:font-semibold transition duration-200 ease-in-out"
+      >
+        <span (click)="logout()">Logout</span>
+      </li>
+    </app-dropdown-menu>
+    <button
+      class="block bg-accent hover:brightness-110 px-6 py-2 rounded-md font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer"
+      [ngClass]="{ hidden: userLoggedIn() }"
+      (click)="isLoginFormOpen.set(true)"
+    >
+      Login
+    </button>
+
+    <a href="" 
+      routerLink="/admin"
+      [ngClass]="{ 'hidden': !isAdmin() }"
+      class="bg-yellow-600 py-1 px-3 rounded-lg hover:bg-yellow-700 transition duration-300 ease-in-out"
+    >
+      <fa-icon [icon]="faCrown" class="text-white me-1" />
+      <span>Área Restrita</span>
+    </a>
+  </div>
 </header>
+
+@if (isLoginFormOpen()) {
+  <app-login-form
+    (closeForm)="isLoginFormOpen.set(false)"
+    (loginSuccess)="isLoginFormOpen.set(false)"
+    (goToRegister)="switchToRegister()"
+  />
+}
+
+@if (isRegisterFormOpen()) {
+  <app-register-form (closeForm)="isRegisterFormOpen.set(false)" (goToLogin)="switchToLogin()" />
+}

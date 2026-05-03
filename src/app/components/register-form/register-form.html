@@ -1,0 +1,107 @@
+<div 
+    class="fixed inset-0 bg-background_black/80 z-40 flex justify-center items-center p-4"
+    (click)="closeForm.emit()"
+>
+    <div 
+        class="bg-[#121212] rounded-xl p-8 w-full max-w-[420px] z-50 shadow-2xl border border-neutral-900 flex flex-col gap-8" 
+        (click)="$event.stopPropagation()"
+    >
+        <div class="flex flex-col items-center justify-center pt-4">
+            <h1 class="text-accent font-bold text-4xl mb-1 tracking-tight">Criar conta</h1>
+            <h3 class="text-neutral-400 text-[10px] tracking-[0.2em] uppercase text-center mt-1">Seus filmes favoritos em um único lugar!</h3>
+        </div>
+
+        <form action="" class="flex flex-col gap-4">
+            <!-- Username -->
+            <div class="flex flex-col gap-2">
+                <label for="username" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                    Nome de usuário
+                </label>
+                <div class="relative flex items-center">
+                    <fa-icon [icon]="faUser" class="absolute left-4 text-neutral-500"></fa-icon>
+                    <input
+                        class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200"
+                        type="text" 
+                        id="username" 
+                        name="username"
+                        placeholder="Fulano41" 
+                    />
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex flex-col gap-2">
+                <label for="email" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                    Email
+                </label>
+                <div class="relative flex items-center">
+                    <fa-icon [icon]="faEnvelope" class="absolute left-4 text-neutral-500"></fa-icon>
+                    <input
+                        class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200"
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        placeholder="email@exemplo.com" 
+                    />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-2">
+                <label for="password" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                    Senha
+                </label>
+                <div class="relative flex items-center">
+                    <fa-icon [icon]="faLock" class="absolute left-4 text-neutral-500"></fa-icon>
+                    <input
+                        class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200" 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="••••••••" 
+                    />
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="flex flex-col gap-2">
+                <label for="confirm_password" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                    Confirmar senha
+                </label>
+                <div class="relative flex items-center">
+                    <fa-icon [icon]="faLock" class="absolute left-4 text-neutral-500"></fa-icon>
+                    <input
+                        class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200" 
+                        type="password" 
+                        id="confirm_password" 
+                        name="confirm_password"
+                        placeholder="••••••••" 
+                    />
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="mt-4">
+                <button 
+                    type="submit" 
+                    class="w-full bg-accent hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-3.5 transition-all duration-200 cursor-pointer"
+                >
+                    Criar conta
+                </button>
+            </div>
+        </form>
+
+        <div class="text-center pb-2">
+            <p class="text-neutral-400 text-sm">
+                Já tem uma conta? 
+                <button 
+                    type="button"
+                    class="text-accent font-semibold hover:underline cursor-pointer" 
+                    (click)="goToLogin.emit()"
+                >
+                    Entre aqui
+                </button>
+            </p>
+        </div>
+    </div>
+</div>

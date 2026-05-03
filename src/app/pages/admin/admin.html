@@ -1,0 +1,43 @@
+<div class="bg-background_default h-screen flex flex-col text-white p-2 gap-3">
+  <div class="text-center">
+    <h1 class="text-3xl uppercase tracking-wide">P<span class="text-2xl">ainel</span> A<span class="text-2xl">dministrativo</span></h1>
+  </div>
+  <div class="mx-6 border-b">
+    <h1 class="text-xl">Bem vindo (a), <span class="font-bold">{{ userName() }}</span></h1>
+    <p class="text-neutral-400 mt-2">Painel de Gerenciamento de Usuários</p>
+  </div>
+  <div class="flex flex-row gap-4">
+    <div class="mx-6">
+      <ul class="flex flex-col gap-3 text-base text-neutral-300">
+        <li class="px-2 cursor-pointer hover:border-s hover:border-white transition duration-200 ease-in-out">
+          <a>Todos os Usuários</a>
+        </li>
+        <li class="px-2 cursor-pointer hover:border-s hover:border-white transition duration-200 ease-in-out">
+          <a>Bloqueados</a>
+        </li>
+        <li class="px-2 cursor-pointer hover:border-s hover:border-white transition duration-200 ease-in-out">
+          <a>Banidos</a>
+        </li>
+        <li class="px-2 cursor-pointer hover:border-s hover:border-white transition duration-200 ease-in-out">
+          <a>Administradores</a>
+        </li>
+      </ul>
+    </div>
+    <div class="border border-neutral-600 h-screen max-h-197"></div>
+    <div>
+      <h2 class="text-xl font-semibold">Todos os Usuários</h2>
+      <table class="w-full mt-4 border border-neutral-600 rounded-lg overflow-hidden">
+        <thead class="bg-neutral-900">
+          <tr class="border-b border-neutral-600">
+            <th class="text-left text-sm text-neutral-400 uppercase tracking-wide"> ID </th>
+            <th class="text-left text-sm text-neutral-400 uppercase tracking-wide"> Nome de Usuário </th>
+            <th class="text-left text-sm text-neutral-400 uppercase tracking-wide"> Email </th>
+            <th class="text-left text-sm text-neutral-400 uppercase tracking-wide"> Status </th>
+            <th class="text-left text-sm text-neutral-400 uppercase tracking-wide"> Ações </th>
+          </tr>
+        </thead>
+        <tbody class="bg-neutral-900">
+      </table>
+    </div>
+  </div>
+</div>
