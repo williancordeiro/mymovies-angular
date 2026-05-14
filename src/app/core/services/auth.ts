@@ -32,17 +32,66 @@ export class Auth {
     );
   }
 
+  register(credentials: { email: string; username: string; password: string; confirmPassword: string}) {
+    const { confirmPassword, ...data } = credentials;
+    
+    return this.http.post<{ token: string }>(`${this.API_URL}/auth/register`, data)
+      .pipe(
+        tap(response => {
+          if (response.token) {
+            localStorage.setItem(this.TOKEN_KEY, response.token);
+            this.decodeAndStoreUser(response.token);
+          }
+        })
+      );
+  }
+
+  updateUserNameOrHandle(credentials: { username: string; handle: string; }) {
+    return this.http.put<{ token: string }>(`${this.API_URL}/change/update`, credentials)
+      .pipe(
+        tap(response => {
+          if (response.token) {
+            localStorage.setItem(this.TOKEN_KEY, response.token);
+            this.decodeAndStoreUser(response.token);
+          }
+        })
+      )
+  }
+
+  updateUserIcon(avatarFile: File) {
+    const formData = new FormData();
+
+    formData.append('avatar_file', avatarFile);
+
+    return this.http.post<{ token: string }>(`${this.API_URL}/change/avatar`, formData).pipe(
+      tap(response => {
+        if (response.token) {
+          localStorage.setItem(this.TOKEN_KEY, response.token);
+          this.decodeAndStoreUser(response.token);
+        }
+      })
+    )
+  }
+
   decodeAndStoreUser(token: string) {
     try {
-      const decoded = jwtDecode<AuthUser>(token);
-      this.currentUser.set(decoded);
+      const decoded = jwtDecode<JwtPayload>(token);
+      if (decoded && (decoded as any).user)
+        this.currentUser.set((decoded as any).user);
+      else
+        this.currentUser.set(decoded as unknown as AuthUser)
     } catch (error) {
+      console.error('Error decoding token:', error);
       this.logout();
     } 
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  getAvatarUrl(avatarFile: string | undefined): string {
+    return `${this.API_URL}${avatarFile}`
   }
 
   logout() {

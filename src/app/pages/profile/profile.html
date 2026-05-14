@@ -1,1 +1,36 @@
-<p>profile works!</p>
+<div class="flex flex-col text-white p-1 gap-2 h-full">
+    <div class="p-6 flex flex-row gap-4 items-center h-70">
+        <div class="h-40 w-40 rounded-full border-2 border-white">
+            <img class="h-full w-full rounded-full" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
+        </div>
+        <div class="flex flex-col">
+            <h2 class="font-bold text-2xl">{{ userName() }}</h2>
+            <p class="text-neutral-400 text-sm">@{{ userHandle() }}</p>
+        </div>
+        <button 
+            class="absolute top-25 right-7 py-2 px-2.5 text-center bg-neutral-800 border-2 border-black shadow-lg shadow-neutral-800 rounded-lg cursor-pointer"
+            (click)="isEditFormOpen.set(true)"
+        >
+            <fa-icon [icon]="faPencil" />
+        </button>
+    </div>
+    <div class="bg-linear-to-br from-neutral-800 to-background_default p-3 rounded-lg">
+        <h2 class="font-bold text-xl mb-2">Últimas Avaliações</h2>
+        <div class="h-56 flex flex-row gap-3 px-2">
+            <div class="h-full bg-linear-to-r from-background_black/80 to-accent px-1 rounded-mb"></div>
+            <div class="flex flex-col gap-2 items-center justify-center">
+                <span class="text-white/50">Sem itens ainda</span>
+            </div>
+        </div>
+    </div>
+    <div class="bg-linear-to-br from-neutral-800 to-background_default p-3 rounded-lg">
+        <h2 class="font-bold text-xl">Minhas listas</h2>
+        <div class="h-58 flex flex-row gap-3 px-2 items-center justify-center">
+            <span class="text-white/50">Sem itens ainda</span>
+        </div>
+    </div>
+</div>
+
+@if (isEditFormOpen()) {
+    <app-edit-profile (closeForm)="isEditFormOpen.set(false)" />
+}

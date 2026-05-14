@@ -29,7 +29,7 @@ export class LoginForm {
   goToRegister = output<void>();
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   })
 
@@ -41,7 +41,7 @@ export class LoginForm {
             this.flashService.clear();
             this.loginSuccess.emit();
             this.router.navigate(['/']);
-          }, 2000);
+          }, 1000);
         },
         error: (err) => {
           console.error('Login failed', err);
