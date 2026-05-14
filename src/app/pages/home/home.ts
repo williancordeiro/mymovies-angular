@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { Auth } from '../../core/services/auth';
 import { MovieService, Movie } from '../../core/services/movie';
@@ -12,13 +12,13 @@ export class Home implements OnInit {
   protected authService = inject(Auth);
   protected movieService = inject(MovieService);
 
-  public movies: Movie[] = [];
+  public movies = signal<Movie[]>([]);
 
   ngOnInit(): void {
     this.movieService.getPopularMovies().subscribe({
       next: (response) => {
         console.log('dados recebidos:', response);
-        this.movies = response.movies.results;
+        this.movies.set(response.movies.results)
       },
       error: (err) => {
         console.error('erro ao buscar filmes', err);
