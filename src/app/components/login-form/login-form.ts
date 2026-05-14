@@ -7,13 +7,11 @@ import { Router } from '@angular/router';
 import { FlashMessages } from '../flash-message/flash-message';
 import { FlashService } from '../../core/services/flash';
 
-
 @Component({
   selector: 'app-login-form',
   imports: [ReactiveFormsModule, FaIconComponent, FlashMessages],
   templateUrl: './login-form.html',
 })
-
 export class LoginForm {
   faEnvelope = faEnvelope;
   faLock = faLock;
@@ -31,7 +29,7 @@ export class LoginForm {
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-  })
+  });
 
   onSubmit() {
     if (this.loginForm.valid) {
@@ -45,7 +43,7 @@ export class LoginForm {
         },
         error: (err) => {
           console.error('Login failed', err);
-        }
+        },
       });
     }
   }
