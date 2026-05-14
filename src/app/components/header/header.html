@@ -26,18 +26,19 @@
     <app-dropdown-menu align="left" [ngClass]="{ hidden: !userLoggedIn() }" [title]="userName() || ''">
       <li
         class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
+        [routerLink]="['/profile', slug()]"
       >
-        <span>My Profile</span>
+        <span [routerLink]="['/profile', slug()]" >Meu Perfil</span>
       </li>
       <li
         class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
       >
-        <span>Settings</span>
+        <span>Configurações</span>
       </li>
       <li
         class="cursor-pointer p-1 hover:bg-red-300/30 hover:text-red-600 hover:font-semibold transition duration-200 ease-in-out"
       >
-        <span (click)="logout()">Logout</span>
+        <span (click)="logout()">Sair</span>
       </li>
     </app-dropdown-menu>
     <button

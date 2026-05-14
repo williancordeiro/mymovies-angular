@@ -26,7 +26,8 @@ export class Header {
 
   userLoggedIn = computed(() => !!this.authService.currentUser());
   userName = computed(() => this.authService.currentUser()?.username);
-  isAdmin = computed(() => this.authService.currentUser()?.admin == 1);
+  isAdmin = computed(() => this.authService.currentUser()?.role == 'Admin');
+  slug = computed(() => this.authService.currentUser()?.handle);
 
   isLoginFormOpen = signal(false);
   isRegisterFormOpen = signal(false);
