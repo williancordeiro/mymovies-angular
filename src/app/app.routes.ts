@@ -20,10 +20,12 @@ export const routes: Routes = [
   {
     path: 'profile/:username',
     component: Profile,
+    canActivate: [authGuard],
   },
   {
     path: 'settings',
     component: Settings,
+    canActivate: [authGuard],
     children: [
       {
         path: 'account',
@@ -39,5 +41,10 @@ export const routes: Routes = [
     path: 'admin',
     component: Admin,
     canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];
