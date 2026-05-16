@@ -7,14 +7,15 @@ import { FlashService } from '../../core/services/flash';
   standalone: true,
   imports: [NgClass],
   template: `
-    <div [ngClass]="isGlobal() ? 'fixed bottom-4 right-4 z-[9999] flex flex-col gap-2' : 'w-full mb-6'">
+    <div [ngClass]="isGlobal() ? 'fixed bottom-4 right-4 z-9999 flex flex-col gap-2' : 'w-full mb-6'">
       @for (flash of flashService.messages(); track flash) {
         <div 
           class="px-4 py-3 rounded border flex items-center transition-all duration-300"
           [ngClass]="{
             'bg-green-500/10 border-green-500/50 text-green-400': flash.type === 'success',
+            'bg-yellow-500/10 border-yellow-500/50 text-yellow-400': flash.type === 'warning',
             'bg-red-500/10 border-red-500/50 text-red-400': flash.type === 'danger',
-            'shadow-xl min-w-[300px] animate-slide-in-right': isGlobal(),
+            'shadow-xl min-w-75 animate-slide-in-right': isGlobal(),
             'w-full animate-fade-in': !isGlobal()
           }"
         >

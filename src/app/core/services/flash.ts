@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
 export interface FlashMessage {
-  type: 'success' | 'danger';
+  type: 'success' | 'warning' | 'danger';
   message: string;
 }
 
@@ -12,7 +12,7 @@ export class FlashService {
   private messagesSignal = signal<FlashMessage[]>([]);
   public readonly messages = this.messagesSignal.asReadonly();
 
-  show(type: 'success' | 'danger', message: string) {
+  show(type: 'success' | 'warning' | 'danger', message: string) {
     console.debug('FlashService.show', type, message);
     const newMessage: FlashMessage = { type, message };
     this.messagesSignal.update(msgs => [...msgs, newMessage]);
