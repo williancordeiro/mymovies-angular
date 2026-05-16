@@ -32,11 +32,13 @@
       </li>
       <li
         class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
+        routerLink="/settings" 
       >
-        <span>Configurações</span>
+        <span routerLink="/settings">Configurações</span>
       </li>
       <li
         class="cursor-pointer p-1 hover:bg-red-300/30 hover:text-red-600 hover:font-semibold transition duration-200 ease-in-out"
+        (click)="logout()"
       >
         <span (click)="logout()">Sair</span>
       </li>

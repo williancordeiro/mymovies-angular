@@ -3,7 +3,7 @@
     (click)="closeForm.emit()"
 >
     <div 
-        class="bg-[#121212] rounded-xl p-8 w-full max-w-[420px] z-50 shadow-2xl border border-neutral-900 flex flex-col gap-8" 
+        class="bg-[#121212] rounded-xl p-8 w-full max-w-105 z-50 shadow-2xl border border-neutral-900 flex flex-col gap-8" 
         (click)="$event.stopPropagation()"
     >
         <div class="flex flex-col items-center justify-center pt-4">
@@ -23,6 +23,9 @@
                     <fa-icon [icon]="faUser" class="absolute left-4 text-neutral-500"></fa-icon>
                     <input
                         class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200"
+                        [ngClass]="{
+                            'border-red-600': registerForm.get('username')?.hasError('serverError'),
+                        }"
                         type="text" 
                         id="username" 
                         name="username"
@@ -30,6 +33,11 @@
                         formControlName="username"
                     />
                 </div>
+                @if (registerForm.get('username')?.hasError('serverError')) {
+                    <span class="ms-3 text-red-600 text-sm font-semibold">
+                        {{ registerForm.get('username')?.getError('serverError') }}
+                    </span>
+                }
             </div>
 
             <!-- Email -->
@@ -41,6 +49,9 @@
                     <fa-icon [icon]="faEnvelope" class="absolute left-4 text-neutral-500"></fa-icon>
                     <input
                         class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200"
+                        [ngClass]="{ 
+                            'border-red-600': registerForm.get('email')?.hasError('serverError'),
+                        }"
                         type="email" 
                         id="email" 
                         name="email"
@@ -48,6 +59,11 @@
                         formControlName="email"
                     />
                 </div>
+                @if (registerForm.get('email')?.hasError('serverError')) {
+                    <span class="ms-3 text-red-600 text-sm font-semibold">
+                        {{ registerForm.get('email')?.getError('serverError') }}
+                    </span>
+                }
             </div>
 
             <!-- Password -->
@@ -59,6 +75,9 @@
                     <fa-icon [icon]="faLock" class="absolute left-4 text-neutral-500"></fa-icon>
                     <input
                         class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200" 
+                        [ngClass]="{
+                            'border-red-600': registerForm.get('password')?.hasError('serverError'),
+                        }"
                         type="password" 
                         id="password" 
                         name="password"
@@ -66,6 +85,11 @@
                         formControlName="password" 
                     />
                 </div>
+                @if (registerForm.get('password')?.hasError('serverError')) {
+                    <span class="ms-3 text-red-600 text-sm font-semibold">
+                        {{ registerForm.get('password')?.getError('serverError') }}
+                    </span>
+                }
             </div>
 
             <!-- Confirm Password -->
@@ -77,6 +101,9 @@
                     <fa-icon [icon]="faLock" class="absolute left-4 text-neutral-500"></fa-icon>
                     <input
                         class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200" 
+                        [ngClass]="{
+                            'border-red-600': registerForm.get('password')?.hasError('serverError'),
+                        }"
                         type="password" 
                         id="confirm_password" 
                         name="confirm_password"
@@ -84,6 +111,11 @@
                         formControlName="confirmPassword" 
                     />
                 </div>
+                @if (registerForm.get('password')?.hasError('serverError')) {
+                    <span class="ms-3 text-red-600 text-sm font-semibold">
+                        As senhas não coincidem.
+                    </span>
+                }
             </div>
 
             <!-- Button -->

@@ -6,10 +6,11 @@ import { Auth } from '../../core/services/auth';
 import { Router } from '@angular/router';
 import { FlashMessages } from '../flash-message/flash-message';
 import { FlashService } from '../../core/services/flash';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, FaIconComponent, FlashMessages],
+  imports: [ReactiveFormsModule, FaIconComponent, FlashMessages, NgClass],
   templateUrl: './login-form.html',
 })
 export class LoginForm {
@@ -27,24 +28,27 @@ export class LoginForm {
   goToRegister = output<void>();
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.minLength(3)]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    email: ['', [Validators.email]],
+    password: ['', [Validators.minLength(6)]],
   });
 
+  ngOnInit() {
+    this.flashService.clear()
+  }
+
   onSubmit() {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.getRawValue()).subscribe({
-        next: () => {
-          setTimeout(() => {
-            this.flashService.clear();
-            this.loginSuccess.emit();
-            this.router.navigate(['/']);
-          }, 1000);
-        },
-        error: (err) => {
-          console.error('Login failed', err);
-        },
-      });
-    }
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.flashService.clear();
+          this.loginSuccess.emit();
+          this.router.navigate(['/']);
+        }, 1000);
+      },
+      error: (err: any) => {
+        const message = err.error?.error || 'Erro ao fazer login';
+        console.log(message);
+      },
+    });
   }
 }
