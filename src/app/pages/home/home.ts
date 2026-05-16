@@ -1,7 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { Auth } from '../../core/services/auth';
-import { MovieService, Movie } from '../../core/services/movie';
+import { MovieService } from '../../core/services/movie';
+import { Movie } from '../../core/models/movie';
 
 @Component({
   selector: 'app-home',
