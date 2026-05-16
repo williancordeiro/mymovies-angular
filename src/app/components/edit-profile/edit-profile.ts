@@ -6,10 +6,12 @@ import { Router } from '@angular/router';
 import { FlashMessages } from '../flash-message/flash-message';
 import { Auth } from '../../core/services/auth';
 import { FlashService } from '../../core/services/flash';
+import { ErrorsResponse } from '../../core/models/errors-response';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile',
-  imports: [FaIconComponent, FlashMessages, ReactiveFormsModule],
+  imports: [FaIconComponent, FlashMessages, ReactiveFormsModule, NgClass],
   templateUrl: './edit-profile.html',
 })
 export class EditProfile {
@@ -47,10 +49,19 @@ export class EditProfile {
               this.router.navigate(['/profile', newHandle])
           }, 1000)
         },
-        error: (err) => {
-          console.error('Error updating profile:', err);
+        error: (err: ErrorsResponse) => {
+          if (err.errors) {
+            Object.keys(err.errors).forEach((field) => {
+              const control = this.updateForm.get(field);
+              if (control) {
+                const errorData = err.errors![field];
+                const errorMessage = Array.isArray(errorData) ? errorData[0] : errorData;
+                control.setErrors({ serverError: errorMessage });
+              }
+            });
+          }
         }
-      })
+      });
     }
   }
 
