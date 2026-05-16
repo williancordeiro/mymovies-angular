@@ -3,6 +3,9 @@ import { Home } from './pages/home/home';
 import { Admin } from './pages/admin/admin';
 import { authGuard } from './core/guards/auth-guard';
 import { Profile } from './pages/profile/profile';
+import { Settings } from './pages/settings/settings';
+import { Accout } from './pages/settings/accout/accout';
+import { Notifications } from './pages/settings/notifications/notifications';
 
 export const routes: Routes = [
   {
@@ -15,12 +18,22 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '',
-    component: Home,
-  },
-  {
     path: 'profile/:username',
     component: Profile,
+  },
+  {
+    path: 'settings',
+    component: Settings,
+    children: [
+      {
+        path: 'account',
+        component: Accout
+      },
+      {
+        path: 'notifications',
+        component: Notifications
+      },
+    ]
   },
   {
     path: 'admin',
