@@ -6,6 +6,7 @@ import { Profile } from './pages/profile/profile';
 import { Settings } from './pages/settings/settings';
 import { Accout } from './pages/settings/accout/accout';
 import { Notifications } from './pages/settings/notifications/notifications';
+import { adminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
   {
@@ -40,7 +41,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: Admin,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   {
     path: '**',
