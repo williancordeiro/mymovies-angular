@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '../../core/services/auth';
-import { EditProfile } from "./edit-profile/edit-profile";
+import { EditProfile } from '../../components/edit-profile/edit-profile';
 
 @Component({
   selector: 'app-profile',

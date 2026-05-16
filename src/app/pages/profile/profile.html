@@ -1,5 +1,5 @@
 <div class="flex flex-col text-white p-1 gap-2 h-full">
-    <div class="p-6 flex flex-row gap-4 items-center h-70">
+    <div class="px-6 flex flex-row gap-4 items-center h-full py-16">
         <div class="h-40 w-40 rounded-full border-2 border-white">
             <img class="h-full w-full rounded-full" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
         </div>
@@ -14,20 +14,27 @@
             <fa-icon [icon]="faPencil" />
         </button>
     </div>
-    <div class="bg-linear-to-br from-neutral-800 to-background_default p-3 rounded-lg">
-        <h2 class="font-bold text-xl mb-2">Últimas Avaliações</h2>
-        <div class="h-56 flex flex-row gap-3 px-2">
-            <div class="h-full bg-linear-to-r from-background_black/80 to-accent px-1 rounded-mb"></div>
-            <div class="flex flex-col gap-2 items-center justify-center">
-                <span class="text-white/50">Sem itens ainda</span>
+
+    <div class="w-full md:max-w-7xl lg:max-w-full mx-auto px-6 py-12 border-t-2 border-black">
+        
+        <div class="flex flex-col gap-12">
+
+            <div class="w-full">
+                <h2 class="text-2xl font-black mb-8 uppercase tracking-tighter text-accent">Últimas Avaliações</h2>
+                <div class="w-full h-36 mx-auto flex items-center justify-center">
+                    <p class="text-lg text-neutral-400">Sem avaliações</p>
+                </div>
             </div>
+
+            <div class="w-full">
+                <h2 class="text-2xl font-black mb-8 uppercase tracking-tighter text-accent">Minhas Listas</h2>
+                <div class="w-full h-32 mx-auto flex items-center justify-center">
+                    <p class="text-lg text-neutral-400">Sem listas</p>
+                </div>
+            </div>
+
         </div>
-    </div>
-    <div class="bg-linear-to-br from-neutral-800 to-background_default p-3 rounded-lg">
-        <h2 class="font-bold text-xl">Minhas listas</h2>
-        <div class="h-58 flex flex-row gap-3 px-2 items-center justify-center">
-            <span class="text-white/50">Sem itens ainda</span>
-        </div>
+
     </div>
 </div>
 
