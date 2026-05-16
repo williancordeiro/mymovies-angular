@@ -1,9 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
 import { AuthUser, JwtPayload } from '../models/auth.user';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../environments/environment';
+import { ErrorsResponse } from '../models/errors-response';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,13 +24,18 @@ export class Auth {
   }
 
   login(credentials: { email: string; password: string }) {
-    return this.http.post<{ token: string }>(`${this.API_URL}/auth/login`, credentials).pipe(
+    return this.http.post<{ token: string }>(`${this.API_URL}/auth/login`, credentials)
+    .pipe(
       tap(response => {
         if (response.token) {
           localStorage.setItem(this.TOKEN_KEY, response.token);
           this.decodeAndStoreUser(response.token);
         }
-      })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        const errors: ErrorsResponse = error.error;
+        return throwError(() => errors);
+      }),
     );
   }
 
@@ -42,19 +49,40 @@ export class Auth {
             localStorage.setItem(this.TOKEN_KEY, response.token);
             this.decodeAndStoreUser(response.token);
           }
-        })
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const errors: ErrorsResponse = error.error;
+          return throwError(() => errors);
+        }),
       );
   }
 
+  deleteAccount(credentials: { password: string; }) {
+    return this.http.delete(`${this.API_URL}/account/delete`, {body: credentials})
+      .pipe(
+        tap(() => {
+          this.logout();
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const errrors: ErrorsResponse = error.error;
+          return throwError(() => errrors);
+        }),
+      )
+  }
+
   updateUserNameOrHandle(credentials: { username: string; handle: string; }) {
-    return this.http.put<{ token: string }>(`${this.API_URL}/change/update`, credentials)
+    return this.http.put<{ token: string }>(`${this.API_URL}/profile/update`, credentials)
       .pipe(
         tap(response => {
           if (response.token) {
             localStorage.setItem(this.TOKEN_KEY, response.token);
             this.decodeAndStoreUser(response.token);
           }
-        })
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const errors: ErrorsResponse = error.error;
+          return throwError(() => errors);
+        }),
       )
   }
 
@@ -71,6 +99,22 @@ export class Auth {
         }
       })
     )
+  }
+
+  changeEmail(credentials: { email: string; password: string; }) {
+    return this.http.put<{ token:string }>(`${this.API_URL}/change/email`, credentials)
+      .pipe(
+        tap(response => {
+          if (response.token) {
+            localStorage.setItem(this.TOKEN_KEY, response.token);
+            this.decodeAndStoreUser(response.token);
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const errors: ErrorsResponse = error.error;
+          return throwError(() => errors);
+        })
+      )
   }
 
   decodeAndStoreUser(token: string) {
