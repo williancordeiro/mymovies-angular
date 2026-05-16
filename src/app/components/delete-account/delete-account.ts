@@ -27,20 +27,22 @@ export class DeleteAccount {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
+  ngOnInit() {
+    this.flashService.clear()
+  }
+
   onSubmit() {
-    if (this.deleteAccountForm.valid) {
-      this.service.deleteAccount(this.deleteAccountForm.getRawValue()).subscribe({
-        next: () => {
-          setTimeout(() => {
-            this.flashService.clear();
-            this.closeForm.emit();
-            this.router.navigate(['/']);
-            }, 1000);
-        },
-        error: (err) => {
-          console.error('Error deleting account:', err);
-        }
-      });
-    }
+    this.service.deleteAccount(this.deleteAccountForm.getRawValue()).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.flashService.clear();
+          this.closeForm.emit();
+          this.router.navigate(['/']);
+          }, 1000);
+      },
+      error: (err) => {
+        console.error('Error deleting account:', err);
+      }
+    });
   }
 }
