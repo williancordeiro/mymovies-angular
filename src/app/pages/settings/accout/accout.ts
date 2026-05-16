@@ -16,5 +16,7 @@ export class Accout {
   private service = inject(Auth);
 
   userEmail = computed(() => this.service.currentUser()?.email);
+  userHandle =  computed(() => this.service.currentUser()?.handle);
+  userName = computed(() => this.service.currentUser()?.username);
 
 }
