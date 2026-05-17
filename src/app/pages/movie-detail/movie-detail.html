@@ -1,0 +1,105 @@
+@if (movie()) {
+<div class="relative min-h-screen bg-background_default text-on-surface overflow-hidden">
+    
+    <!-- Banner de Fundo (Backdrop) com Overlay Gradiente -->
+    <div class="absolute inset-0 z-0 opacity-30">
+        <img [src]="'https://image.tmdb.org/t/p/original' + movie().backdrop_path" class="w-full h-full object-cover blur-sm" [alt]="movie().title">
+        <div class="absolute inset-0 bg-gradient-to-t from-background_default via-transparent to-transparent"></div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="relative z-10 p-8 pt-12 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
+        
+        <!-- Lado Esquerdo: Poster + Ações Rápidas -->
+        <div class="w-full md:w-80 flex-shrink-0">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie().poster_path" [alt]="movie().title"
+                 class="w-full rounded-brand shadow-[0_20px_50px_rgba(250,92,21,0.5)] mb-6 border border-white/5">
+            
+            <!-- Botões de Ação Social -->
+            <div class="flex gap-2">
+                <button (click)="toggleFavorite()" 
+                        class="flex-1 py-3 rounded-brand font-bold transition-all flex items-center justify-center gap-2"
+                        [ngClass]="isFavorite() ? 'bg-primary text-white' : 'bg-white/10 hover:bg-white/20'">
+                    <fa-icon [icon]="faHeart" [class.text-white]="isFavorite()"></fa-icon>
+                    {{ isFavorite() ? 'Favoritado' : 'Favoritar' }}
+                </button>
+                <button (click)="openModal()" 
+                        class="flex-1 py-3 bg-accent/20 border border-accent/30 hover:bg-accent/40 text-accent rounded-brand font-bold transition-all flex items-center justify-center gap-2">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                    Lista
+                </button>
+            </div>
+        </div>
+
+        <!-- Lado Direito: Informações e Avaliação -->
+        <div class="flex-grow">
+            <button routerLink="/" class="text-secondary/60 hover:text-primary mb-4 flex items-center gap-2 transition-colors font-bold group">
+                <fa-icon [icon]="faChevronLeft" class="transition-transform group-hover:-translate-x-1"></fa-icon>
+                Voltar para a Galeria
+            </button>
+            
+            <h1 class="text-6xl font-bold text-primary mb-2">{{ movie().title }}</h1>
+            <p class="text-xl italic text-secondary/80 mb-6 font-light">"{{ movie().tagline }}"</p>
+
+            <div class="flex items-center gap-6 mb-8 text-lg font-medium text-secondary">
+                <span class="flex items-center gap-2">
+                    <fa-icon [icon]="faClock" class="text-primary/70"></fa-icon>
+                    {{ movie().runtime }} min
+                </span>
+                <span class="flex items-center gap-2">
+                    <fa-icon [icon]="faCalendar" class="text-primary/70"></fa-icon>
+                    {{ movie().release_date | date:'yyyy' }}
+                </span>
+                <span class="bg-primary/20 text-primary px-3 py-1 rounded-brand text-sm border border-primary/30 flex items-center gap-2">
+                    <fa-icon [icon]="faStar"></fa-icon>
+                    TMDB: {{ movie().vote_average | number:'1.1-1' }}
+                </span>
+            </div>
+
+            <h2 class="text-primary font-bold uppercase tracking-widest text-sm mb-3">Sua Avaliação</h2>
+            <div class="flex gap-2 mb-8">
+                @for (star of [1,2,3,4,5]; track star) {
+                    <button (click)="setRating(star)" 
+                            class="text-3xl transition-all hover:scale-125" 
+                            [class.text-primary]="userRating() >= star" 
+                            [class.text-white/20]="userRating() < star">
+                        <fa-icon [icon]="faStar"></fa-icon>
+                    </button>
+                }
+                <span class="ml-4 text-secondary/50 self-center font-bold">{{ userRating() > 0 ? 'Sua nota: ' + userRating() : 'Não avaliado' }}</span>
+            </div>
+
+            <h2 class="text-white font-bold text-2xl mb-3">Sinopse</h2>
+            <p class="text-xl text-secondary leading-relaxed max-w-3xl mb-8">
+                {{ movie().overview }}
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+                @for (genre of movie().genres; track genre.id) {
+                    <span class="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-sm text-secondary hover:border-primary/50 transition-colors cursor-default">
+                        {{ genre.name }}
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Simples (Placeholder) -->
+    @if (showModal()) {
+        <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="bg-background_black border border-white/10 p-8 rounded-brand max-w-md w-full shadow-2xl">
+                <h2 class="text-primary text-2xl font-bold mb-4">Adicionar à Lista</h2>
+                <p class="text-secondary mb-6">Em breve: Funcionalidade para gerenciar suas coleções personalizadas.</p>
+                <button (click)="showModal.set(false)" class="w-full py-3 bg-primary text-white rounded-brand font-bold">Fechar</button>
+            </div>
+        </div>
+    }
+</div>
+} @else {
+<div class="flex items-center justify-center min-h-screen bg-background_default">
+    <p class="text-primary text-2xl animate-pulse font-bold flex items-center gap-4">
+        <fa-icon [icon]="faStar" class="animate-spin"></fa-icon>
+        Carregando detalhes do filme...
+    </p>
+</div>
+}

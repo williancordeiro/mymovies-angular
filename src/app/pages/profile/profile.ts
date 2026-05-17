@@ -1,26 +1,52 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '../../core/services/auth';
 import { EditProfile } from '../../components/edit-profile/edit-profile';
+import { MovieService } from '../../core/services/movie';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
-  imports: [FontAwesomeModule, EditProfile],
+  standalone: true,
+  imports: [CommonModule, RouterModule, FontAwesomeModule, EditProfile],
   templateUrl: './profile.html',
 })
-export class Profile {
+export class Profile implements OnInit {
   faPencil = faPencil;
+  faStar = faStar;
   private routerService = inject(Router)
   private service = inject(Auth);
+  private movieService = inject(MovieService);
   userName = computed(() => this.service.currentUser()?.username);
   userHandle =  computed(() => this.service.currentUser()?.handle);
   userAvatar = computed(() => this.service.getAvatarUrl(this.service.currentUser()?.avatar_file));
-  //slug = computed(() => this.service.currentUser()?.handle);
-
-
-
+  public ratedMovies = signal<any[]>([]);
   isEditFormOpen = signal(false);
-  
+
+  ngOnInit() {
+    const handle = this.userHandle();
+    if (handle) {
+      this.movieService.getUserRatings(handle).subscribe({
+        next: (response) => {
+          const ratings = response.ratings;
+          if (ratings.length > 0) {
+            const detailRequests = ratings.map((r: any) => 
+               this.movieService.getMovieById(r.movie_id)
+            );
+
+            forkJoin<any[]>(detailRequests).subscribe((details: any[]) => {
+              const enrichedMovies = details.map((d, index) => ({
+                ...d.movie,
+                user_rating: ratings[index].rating
+              }));
+              this.ratedMovies.set(enrichedMovies);
+            });
+          }
+        }
+      });
+    }
+  }
 }
