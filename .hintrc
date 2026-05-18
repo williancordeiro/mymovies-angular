@@ -12,6 +12,7 @@
         "list": "off",
         "listitem": "off"
       }
-    ]
+    ],
+    "axe/text-alternatives": "off"
   }
 }

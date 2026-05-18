@@ -7,29 +7,41 @@
         (click)="$event.stopPropagation()"
     >
         <div class="flex flex-col items-center justify-center pt-4">
-            <h1 class="text-accent font-bold text-4xl mb-1 tracking-tight">myMovies</h1>
-            <h3 class="text-neutral-400 text-[10px] tracking-[0.2em] uppercase text-center mt-1">Seus filmes favoritos em um único lugar!</h3>
+            <h1 class="text-accent font-bold text-4xl mb-1 tracking-tight">Alterar email</h1>
+            <h3 class="text-neutral-400 text-[10px] tracking-[0.2em] uppercase text-center mt-1">Seu email padrão sera alterado para o novo.</h3>
         </div>
 
         <app-flash-message [isGlobal]="false" />
 
-        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="flex flex-col gap-5">
+        <form 
+            class="flex flex-col gap-5"
+            (ngSubmit)="onSubmit()"
+            [formGroup]="changeEmailForm"
+        >
             <!-- Email -->
             <div class="flex flex-col gap-2">
                 <label for="email" class="text-neutral-400 text-xs font-bold uppercase tracking-wider">
-                    Endereço de email
+                    Novo email
                 </label>
                 <div class="relative flex items-center">
                     <fa-icon [icon]="faEnvelope" class="absolute left-4 text-neutral-500"></fa-icon>
                     <input
                         class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200"
+                        [ngClass]="{
+                            'border-red-600': changeEmailForm.get('email')?.hasError('serverError'),
+                        }"
                         type="email" 
                         id="email" 
                         name="email"
-                        placeholder="name@example.com"
+                        [placeholder]="userEmail()"
                         formControlName="email"
                     />
                 </div>
+                @if (changeEmailForm.get('email')?.hasError('serverError')) {
+                    <span class="ms-3 text-red-600 text-sm font-semibold">
+                        {{ changeEmailForm.get('email')?.getError('serverError') }}
+                    </span>
+                }
             </div>
 
             <!-- Password -->
@@ -44,7 +56,7 @@
                     <input
                         class="w-full bg-[#1A1A1A] border border-neutral-800 text-neutral-200 rounded-md py-3 pl-11 pr-4 outline-none focus:border-accent transition-colors duration-200" 
                         [ngClass]="{
-                            'border-red-600': loginForm.get('password')?.hasError('serverError'),
+                            'border-red-600': changeEmailForm.get('password')?.hasError('serverError'),
                         }"
                         type="password" 
                         id="password" 
@@ -53,30 +65,30 @@
                         formControlName="password"
                     />
                 </div>
+                @if (changeEmailForm.get('password')?.hasError('serverError')) {
+                    <span class="ms-3 text-red-600 text-sm font-semibold">
+                        {{ changeEmailForm.get('password')?.getError('serverError') }}
+                    </span>
+                }
             </div>
 
             <!-- Button -->
-            <div class="mt-4">
+            <div class="mt-4 flex flex-col gap-2">
                 <button 
                     type="submit" 
-                    class="w-full bg-accent hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-3.5 transition-all duration-200 cursor-pointer"
+                    class="w-full bg-accent hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-2.5 transition-all duration-200 cursor-pointer"
                 >
-                    Entrar
+                    Alterar email
+                </button>
+                
+                <button 
+                    type="submit" 
+                    class="w-full bg-neutral-500 hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-2.5 transition-all duration-200 cursor-pointer"
+                    (click)="closeForm.emit()"
+                >
+                    Cancelar
                 </button>
             </div>
         </form>
-
-        <div class="text-center pb-2">
-            <p class="text-neutral-400 text-sm">
-                Não tem uma conta? 
-                <button 
-                    type="button"
-                    class="text-accent font-semibold hover:underline cursor-pointer" 
-                    (click)="goToRegister.emit()"
-                >
-                    Cadastre-se
-                </button>
-            </p>
-        </div>
     </div>
 </div>

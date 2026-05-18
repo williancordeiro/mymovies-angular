@@ -2,7 +2,9 @@ export interface AuthUser {
     id: number;
     email: string;
     username: string;
-    admin: number;
+    role: string;
+    handle: string;
+    avatar_file: string;
 }
 export interface JwtPayload {
     iss: string;

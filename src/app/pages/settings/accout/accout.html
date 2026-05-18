@@ -1,0 +1,67 @@
+<div class="flex flex-col gap-9 text-white p-2">
+    <div class="flex flex-col gap-12 pb-3 w-full mb-5 border-b border-black">
+        <div class="flex flex-row gap-12 w-full">
+            <div class="w-full">
+                <h2 class="font-bold text-lg text-accent">Nome de usuário</h2>
+                <div class="bg-neutral-800 p-2 mt-2 rounded-lg">
+                    <p class="text-neutral-400 tex-base">{{ userName() }}</p>
+                </div>
+            </div>
+            <div class="w-full">
+                <h2 class="font-bold text-lg text-accent">Identificador global</h2>
+                <div class="bg-neutral-800 p-2 mt-2 rounded-lg">
+                    <p class="text-neutral-400 tex-base">{{ userHandle() }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="w-full">
+            <h2 class="font-bold text-lg text-accent">Endereço de email</h2>
+            <div class="bg-neutral-800 p-2 mt-2 rounded-lg">
+                <p class="text-neutral-400 tex-base">{{ userEmail() }}</p>
+            </div>
+            <p class="text-neutral-400 text-sm">
+                Endreço de email no qual recebe as novidades do My Movies e notificações.
+            </p>
+        </div>
+    </div>
+    <div class="flex flex-row gap-2 w-full pb-3 border-b border-black">
+        <div class="w-full">
+            <h2 class="font-bold text-lg text-accent">Alterar Email</h2>
+            <p class="text-neutral-400 text-sm">A alteração do email troca seu endereço de email de cadastro, 
+                com isso ao tentar logar futuramente o novo email sera responsavel
+            </p>
+        </div>
+        <div class="w-full flex items-end justify-end">
+            <button
+                type="button"
+                class="py-2 px-4 font-semibold font-sans rounded-lg text-accent border-2 border-accent hover:bg-accent hover:text-white transition-all duration-300 cursor-pointer"
+                (click)="isEmailChangeFormOpen.set(true)"    
+            >
+                Alterar email
+            </button>
+        </div>
+    </div>
+    <div class="w-full pb-3 border-b border-black">
+        <h2 class="font-bold text-lg text-accent">Deletar conta</h2>
+        <p class="text-neutral-400 text-sm">Deletar a conta é uma ação <span class="font-bold">irreversivel</span>, ao deletar
+            sua conta todos os seus dados serão perdidos.    
+        </p>
+        <div class="w-full flex items-end justify-end">
+            <button
+                type="button"
+                class="py-2 px-4 font-semibold font-sans rounded-lg text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white transition-all duration-300 cursor-pointer"
+                (click)="isDeleteAccountFormOpen.set(true)"  
+            >
+                Deletar minha conta
+            </button>
+        </div>
+    </div>
+</div>
+
+@if (isEmailChangeFormOpen()) {
+    <app-change-email (closeForm)="isEmailChangeFormOpen.set(false)" />
+}
+
+@if (isDeleteAccountFormOpen()) {
+    <app-delete-account (closeForm)="isDeleteAccountFormOpen.set(false)" />
+}

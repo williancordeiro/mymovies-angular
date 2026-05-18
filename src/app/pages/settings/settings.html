@@ -1,0 +1,30 @@
+<div class="h-screen max-h-218 bg-background_default text-white p-3 overflow-hidden">
+    <h1 class="font-bold text-2xl uppercase mt-5 border-b border-black p-3">Configurações</h1>
+
+    <div class="flex flex-row mt-3 gap-3 h-full max-h-190">
+
+        <div class="text-xl font-sans w-50">
+
+            <a 
+                routerLink="/settings/account"
+                class="hover:text-accent transition duration-300"
+            >
+                Minha conta
+            </a>
+
+            <a 
+                routerLink="/settings/notifications"
+                class="hover:text-accent transition duration-300"
+            >
+                Notificações
+            </a>
+
+        </div>
+
+        <div class="h-full border border-black"></div>
+
+        <div class="w-full">
+            <router-outlet />
+        </div>
+    </div>
+</div>
