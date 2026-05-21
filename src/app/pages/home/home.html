@@ -1,6 +1,7 @@
 <!-- Fundo escuro -->
-<div class="bg-background_default min-h-screen flex flex-col p-8 sm:p-12">
+<div class="bg-background_default min-h-screen flex flex-col p-8 sm:p-12 relative">
 
+    <!-- TMDB Movies Section -->
     <div class="text-on-surface mb-10">
         <h1 class="font-headline text-display-lg text-primary font-bold">
             Filmes em Destaque
@@ -51,4 +52,20 @@
         }
 
     </div>
+
+    <!-- FAB Button -->
+    <button *ngIf="authService.isLoggedIn()"
+        (click)="openModal()"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-accent text-white rounded-full flex items-center justify-center shadow-lg shadow-accent/40 hover:scale-110 hover:bg-accent/90 transition-all z-40">
+        <fa-icon [icon]="faPlus" size="lg"></fa-icon>
+    </button>
+
+    <!-- Modal Form -->
+    <app-custom-movie-modal 
+        [isOpen]="isModalOpen" 
+        [movie]="movieToEdit"
+        (close)="closeModal()"
+        (saved)="onSaved()">
+    </app-custom-movie-modal>
+
 </div>

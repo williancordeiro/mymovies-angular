@@ -20,8 +20,28 @@ export class MovieService {
         return this.http.post(`${this.API_URL}/movies/rate`, { movie_id: movieId, rating: rating });
     }
 
+    deleteRating(movieId: number): Observable<any> {
+        return this.http.delete(`${this.API_URL}/movies/rate?movie_id=${movieId}`);
+    }
+
     getUserRatings(handle: string): Observable<any> {
         return this.http.get<any>(`${this.API_URL}/users/${handle}/ratings`);
+    }
+
+    getCustomMovies(): Observable<any> {
+        return this.http.get<any>(`${this.API_URL}/custom-movies`);
+    }
+
+    createCustomMovie(movie: any): Observable<any> {
+        return this.http.post<any>(`${this.API_URL}/custom-movies`, movie);
+    }
+
+    updateCustomMovie(id: number, movie: any): Observable<any> {
+        return this.http.put<any>(`${this.API_URL}/custom-movies/${id}`, movie);
+    }
+
+    deleteCustomMovie(id: number): Observable<any> {
+        return this.http.delete<any>(`${this.API_URL}/custom-movies/${id}`);
     }
 
 }
