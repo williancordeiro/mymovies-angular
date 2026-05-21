@@ -30,6 +30,8 @@ export class CustomMovieModal implements OnInit, OnChanges {
   movieForm!: FormGroup;
   isSubmitting = false;
   apiErrors: any = {};
+  apiWarnings: any = {};  //mensagem amarela
+  successMessage: string = ''; //mensagem verde
 
   ngOnInit() {
     this.initForm();
@@ -44,7 +46,7 @@ export class CustomMovieModal implements OnInit, OnChanges {
 
   initForm() {
     const isTmdb = this.mode === 'tmdb';
-    
+
     // TMDB movies use different property names than Custom Movies
     const title = this.movie?.title || '';
     const description = isTmdb ? (this.movie?.overview || '') : (this.movie?.description || '');
@@ -87,8 +89,8 @@ export class CustomMovieModal implements OnInit, OnChanges {
           if (err.status === 422 && err.error?.errors) {
             this.apiErrors = err.error.errors;
           } else {
-             // Handle cases where err might not be a standard HttpErrorResponse
-             console.error("Unknown error:", err);
+            // Handle cases where err might not be a standard HttpErrorResponse
+            console.error("Unknown error:", err);
           }
           this.cdr.detectChanges();
         }
@@ -106,7 +108,7 @@ export class CustomMovieModal implements OnInit, OnChanges {
           if (err.status === 422 && err.error?.errors) {
             this.apiErrors = err.error.errors;
           } else {
-             console.error("Unknown error:", err);
+            console.error("Unknown error:", err);
           }
           this.cdr.detectChanges();
         }
