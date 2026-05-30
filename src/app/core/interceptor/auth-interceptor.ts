@@ -25,7 +25,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
         if (error.status === 500) {
           console.error('Server error:', error);
-          router.navigate(['/']);
         }
 
 
@@ -43,7 +42,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (error.status === 500) {
         console.error('Server error:', error);
-        router.navigate(['/']);
       }
 
 
