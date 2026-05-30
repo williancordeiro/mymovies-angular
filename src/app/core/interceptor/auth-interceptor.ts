@@ -1,10 +1,13 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Auth } from '../services/auth';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(Auth);
-  const token = authService.getToken();
+  const service = inject(Auth);
+  const router = inject(Router);
+  const token = service.getToken();
 
   if (token) {
     const cloned = req.clone({
@@ -13,8 +16,38 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     });
 
-    return next(cloned);
+    return next(cloned).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          service.logout();
+          router.navigate(['/']);
+        }
+
+        if (error.status === 500) {
+          console.error('Server error:', error);
+          router.navigate(['/']);
+        }
+
+
+        return throwError(() => error);
+      })
+    );
   }
 
-  return next(req);
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        service.logout();
+        router.navigate(['/']);
+      }
+
+      if (error.status === 500) {
+        console.error('Server error:', error);
+        router.navigate(['/']);
+      }
+
+
+      return throwError(() => error);
+    })
+  );;
 };
