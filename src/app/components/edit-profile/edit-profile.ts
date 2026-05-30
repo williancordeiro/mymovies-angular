@@ -22,12 +22,8 @@ export class EditProfile {
   private router = inject(Router);
   private flashService = inject(FlashService);
 
-  avatarError = signal<string | null>(null);
-
-
   userName = computed(() => this.authService.currentUser()?.username);
   userHandle =  computed(() => this.authService.currentUser()?.handle);
-  userAvatar = computed(() => this.service.getAvatarUrl(this.authService.currentUser()?.avatar_file));
 
   faUser = faUser;
   faEnvelope = faEnvelope;
@@ -66,33 +62,6 @@ export class EditProfile {
           }
         }
       });
-    }
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    
-    if (input.files && input.files[0]) {
-      this.avatarError.set(null);
-      const file = input.files[0];
-      
-      this.service.updateUserIcon(file).subscribe({
-        next: () => {
-          setTimeout(() => {
-            this.flashService.clear()
-            this.closeForm.emit();
-          }, 1000)
-        },
-        error: (err: ErrorsResponse) => {
-          if (err.errors && err.errors['avatar_file']) {
-            const errorData = err.errors['avatar_file'];
-            const errorMessage = Array.isArray(errorData) ? errorData[0] : errorData;
-            this.avatarError.set(errorMessage);
-          } else {
-            this.avatarError.set('An unexpected error occurred while uploading the avatar.');
-          }
-        }
-      })
     }
   }
 

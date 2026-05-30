@@ -1,15 +1,29 @@
-<div class="flex flex-col text-white p-1 gap-2 h-full">
-    <div class="px-6 flex flex-row gap-4 items-center h-full py-16">
-        <div class="h-40 w-40 rounded-full border-2 border-white">
-            <img class="h-full w-full rounded-full" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
+<div class="flex flex-col text-white gap-2 h-full">
+    <div class="px-6 relative overflow-hidden flex flex-row gap-4 items-center h-full py-16">
+        <img class="absolute inset-0 w-full h-full object-cover" [src]="userBanner()" />
+        <div class="absolute inset-0 bg-radial from-black/50 to-black"></div>
+        <div class="h-40 w-40 relative z-10 rounded-full border-2 border-accent">
+            <img class="h-full w-full rounded-full bg-background_default object-cover" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
+            <button 
+                (click)="isEditAvatarFormOpen.set(true)"
+                class="absolute top-4 right-0 p-1 flex items-center justify-center bg-neutral-800 hover:bg-green-700 transition-all duration-300 ease-in-out shadow-lg shadow-neutral-800 rounded-full cursor-pointer"
+            >
+                <fa-icon class="text-xs" [icon]="faPencil"></fa-icon>
+            </button>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col relative z-10">
             <h2 class="font-bold text-2xl">{{ userName() }}</h2>
             <p class="text-neutral-400 text-sm">@{{ userHandle() }}</p>
+            <button 
+                (click)="isEditFormOpen.set(true)"
+                class="absolute -top-2 -right-5 p-1 flex items-center justify-center hover:bg-green-700 transition-all duration-300 ease-in-out rounded-full cursor-pointer"
+            >
+                <fa-icon class="text-xs" [icon]="faPencil"></fa-icon>
+            </button>
         </div>
         <button 
-            class="absolute top-25 right-7 py-2 px-2.5 text-center bg-neutral-800 border-2 border-black shadow-lg shadow-neutral-800 rounded-lg cursor-pointer"
-            (click)="isEditFormOpen.set(true)"
+            class="absolute top-2 right-5 py-1.5 px-2 flex items-center justify-center rounded-xl cursor-pointer hover:bg-green-700 transition-all duration-300 ease-in-out"
+            (click)="isEditBannerFormOpen.set(true)"
         >
             <fa-icon [icon]="faPencil" />
         </button>
@@ -65,4 +79,12 @@
 
 @if (isEditFormOpen()) {
     <app-edit-profile (closeForm)="isEditFormOpen.set(false)" />
+}
+
+@if (isEditAvatarFormOpen()) {
+    <app-edit-avatar (closeForm)="isEditAvatarFormOpen.set(false)" />
+}
+
+@if (isEditBannerFormOpen()) {
+    <app-edit-banner (closeForm)="isEditBannerFormOpen.set(false)" />
 }

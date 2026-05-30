@@ -32,6 +32,25 @@ export class ProfileService {
     return `${this.API_URL}${avatarFile}`
   }
 
+  updateUserBanner(bannerFile: File) {
+    const formData = new FormData();
+
+    formData.append('banner_file', bannerFile);
+
+    return this.http.post<{ token: string }>(`${this.API_URL}/change/banner`, formData).pipe(
+      tap(response => {
+        if (response.token) {
+          this.auth.updateSession(response.token);
+        }
+      }),
+      catchError(handleError),
+    );
+  }
+
+  getBannerUrl(bannerFile: string | undefined): string {
+    return `${this.API_URL}${bannerFile}`
+  }
+
   updateUserNameOrHandle(credentials: { username: string; handle: string; }) {
     return this.http.put<{ token: string }>(`${this.API_URL}/profile/update`, credentials)
       .pipe(
