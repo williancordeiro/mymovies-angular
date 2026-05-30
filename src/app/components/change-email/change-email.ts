@@ -8,6 +8,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ErrorsResponse } from '../../core/models/errors-response';
 import { NgClass } from '@angular/common';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-change-email',
@@ -17,12 +18,13 @@ import { NgClass } from '@angular/common';
 export class ChangeEmail {
   faEnvelope = faEnvelope;
   faLock = faLock;
-  private service = inject(Auth);
+  private service = inject(UserService);
+  private authService = inject(Auth);
   private flashService = inject(FlashService);
   private fb = inject(NonNullableFormBuilder);
   private router = inject(Router);
   
-  userEmail = computed(() => this.service.currentUser()?.email);
+  userEmail = computed(() => this.authService.currentUser()?.email);
 
   closeForm = output<void>();
 

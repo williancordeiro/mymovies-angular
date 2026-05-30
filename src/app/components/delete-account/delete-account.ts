@@ -2,10 +2,10 @@ import { Component, inject, output } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FlashMessages } from '../flash-message/flash-message';
-import { Auth } from '../../core/services/auth';
 import { FlashService } from '../../core/services/flash';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -16,7 +16,7 @@ export class DeleteAccount {
   faEnvelope = faEnvelope;
   faLock = faLock;
   
-  private service = inject(Auth);
+  private service = inject(UserService);
   private flashService = inject(FlashService);
   private fb = inject(NonNullableFormBuilder);
   private router = inject(Router);

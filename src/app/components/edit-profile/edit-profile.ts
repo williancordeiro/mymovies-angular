@@ -1,4 +1,4 @@
-import { Component, computed, inject, output } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';;
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import { Auth } from '../../core/services/auth';
 import { FlashService } from '../../core/services/flash';
 import { ErrorsResponse } from '../../core/models/errors-response';
 import { NgClass } from '@angular/common';
+import { ProfileService } from '../../core/services/profile.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -16,14 +17,17 @@ import { NgClass } from '@angular/common';
 })
 export class EditProfile {
   private fb = inject(NonNullableFormBuilder);
-  private service = inject(Auth);
+  private authService = inject(Auth);
+  private service = inject(ProfileService);
   private router = inject(Router);
   private flashService = inject(FlashService);
 
+  avatarError = signal<string | null>(null);
 
-  userName = computed(() => this.service.currentUser()?.username);
-  userHandle =  computed(() => this.service.currentUser()?.handle);
-  userAvatar = computed(() => this.service.getAvatarUrl(this.service.currentUser()?.avatar_file));
+
+  userName = computed(() => this.authService.currentUser()?.username);
+  userHandle =  computed(() => this.authService.currentUser()?.handle);
+  userAvatar = computed(() => this.service.getAvatarUrl(this.authService.currentUser()?.avatar_file));
 
   faUser = faUser;
   faEnvelope = faEnvelope;
@@ -40,7 +44,7 @@ export class EditProfile {
     if (this.updateForm.valid) {
       this.service.updateUserNameOrHandle(this.updateForm.getRawValue()).subscribe({
         next: () => {
-          const newHandle = this.service.currentUser()?.handle;
+          const newHandle = this.authService.currentUser()?.handle;
           setTimeout(() => {
             this.flashService.clear()
             this.closeForm.emit();
@@ -69,6 +73,7 @@ export class EditProfile {
     const input = event.target as HTMLInputElement;
     
     if (input.files && input.files[0]) {
+      this.avatarError.set(null);
       const file = input.files[0];
       
       this.service.updateUserIcon(file).subscribe({
@@ -78,8 +83,14 @@ export class EditProfile {
             this.closeForm.emit();
           }, 1000)
         },
-        error: (error) => {
-          console.error('Error updating user icon:', error);
+        error: (err: ErrorsResponse) => {
+          if (err.errors && err.errors['avatar_file']) {
+            const errorData = err.errors['avatar_file'];
+            const errorMessage = Array.isArray(errorData) ? errorData[0] : errorData;
+            this.avatarError.set(errorMessage);
+          } else {
+            this.avatarError.set('An unexpected error occurred while uploading the avatar.');
+          }
         }
       })
     }

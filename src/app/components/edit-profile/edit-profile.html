@@ -24,6 +24,7 @@
         
         <div class="flex flex-row w-full gap-3">
 
+            <!-- Avatar -->
             <div class="flex flex-col px-3 gap-4 w-full items-center justify-center">
                 <div class="w-40 h-40 rounded-full border-2 border-accent">
                     <img
@@ -40,6 +41,11 @@
                         accept="image/*"
                     >
                 </div>
+                @if (avatarError()) {
+                    <span class="text-red-600 text-sm font-semibold">
+                        {{ avatarError() }}
+                    </span>
+                }
                 <div class="mt-4.5 w-full">
                     <button 
                         type="button"
