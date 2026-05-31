@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, input, output, signal } from '@angular/core';
+import { Component, computed, contentChildren, ElementRef, HostListener, input, output, signal } from '@angular/core';
 import { DropdownModel } from '../../core/models/dropdown.model';
 import { NgClass } from '@angular/common';
 
@@ -14,6 +14,9 @@ export class DropdownMenu {
   isOpen = signal(false);
 
   align = input<'left' | 'right'>('right');
+  private nodes = contentChildren('dropdown-title', { descendants: true});
+
+  hasContent = computed(() => this.nodes().length > 0);
 
   constructor(private eRef: ElementRef) {}
 

@@ -1,11 +1,14 @@
 <div class="relative inline-block">
     <button class="cursor-pointer" (click)="toggle()">
-        {{ title() }}
+        <ng-content select="[dropdown-title]"></ng-content>
+        @if (title() && !hasContent()) {
+            {{ title() }}
+        }
     </button>
 
     @if (isOpen()) {
         <ul 
-            class="absolute mt-2 py-2 w-48 bg-background_default border border-black/40 rounded-md shadow-lg z-50"
+            class="absolute mt-2 text-sm font-sans py-2 w-48 bg-background_default border border-black/40 rounded-md shadow-lg z-50"
             [ngClass]="{ '-left-10': align() === 'left', '-right-10': align() === 'right' }"
         >
             <ng-content></ng-content>
