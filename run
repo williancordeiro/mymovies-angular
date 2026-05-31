@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -o errexit
+set -o pipefail
+
 function yarn() {
     yarn install "${@}"
 }
@@ -19,3 +22,6 @@ function angular:console {
 function nginx:console {
     docker compose exec nginx bash
 }
+
+TIMEFORMAT=$'\nTask completed in %3lR'
+time ${@}
