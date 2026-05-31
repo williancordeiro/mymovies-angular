@@ -23,42 +23,54 @@
     </button>
   </div>
   <div class="flex gap-4 items-center text-white">
-    <app-dropdown-menu align="left" [ngClass]="{ hidden: !userLoggedIn() }" [title]="userName() || ''">
-      <li
-        class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
-        [routerLink]="['/profile', slug()]"
+    @if (userLoggedIn()) {
+      <app-dropdown-menu align="left" [title]="userName() || ''">
+        <li
+          class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
+          [routerLink]="['/profile', slug()]"
+        >
+          <p [routerLink]="['/profile', slug()]" >
+            <fa-icon [icon]="faUser" class="me-1" />
+            <span>Perfil</span>
+          </p>
+        </li>
+        <li
+          class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
+          routerLink="/settings" 
+        >
+          <p routerLink="/settings">
+            <fa-icon [icon]="faGear" class="me-1" />
+            <span>Configurações</span>
+          </p>
+        </li>
+        <li
+          class="cursor-pointer p-1 hover:bg-red-300/30 hover:text-red-600 hover:font-semibold transition duration-200 ease-in-out"
+          (click)="logout()"
+        >
+          <p>
+            <fa-icon [icon]="faPowerOff" class="me-1" />
+            <span>Sair</span>
+          </p>
+        </li>
+      </app-dropdown-menu>
+    } @else {
+      <button
+        class="block bg-accent hover:brightness-110 px-6 py-2 rounded-md font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer"
+        (click)="isLoginFormOpen.set(true)"
       >
-        <span [routerLink]="['/profile', slug()]" >Meu Perfil</span>
-      </li>
-      <li
-        class="cursor-pointer p-1 hover:bg-black/50 hover:font-semibold transition duration-200 ease-in-out"
-        routerLink="/settings" 
-      >
-        <span routerLink="/settings">Configurações</span>
-      </li>
-      <li
-        class="cursor-pointer p-1 hover:bg-red-300/30 hover:text-red-600 hover:font-semibold transition duration-200 ease-in-out"
-        (click)="logout()"
-      >
-        <span (click)="logout()">Sair</span>
-      </li>
-    </app-dropdown-menu>
-    <button
-      class="block bg-accent hover:brightness-110 px-6 py-2 rounded-md font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer"
-      [ngClass]="{ hidden: userLoggedIn() }"
-      (click)="isLoginFormOpen.set(true)"
-    >
-      Login
-    </button>
+        Login
+      </button>
+    }
 
-    <a href="" 
-      routerLink="/admin"
-      [ngClass]="{ 'hidden': !isAdmin() }"
-      class="bg-yellow-600 py-1 px-3 rounded-lg hover:bg-yellow-700 transition duration-300 ease-in-out"
-    >
-      <fa-icon [icon]="faCrown" class="text-white me-1" />
-      <span>Área Restrita</span>
-    </a>
+    @if (userLoggedIn() && isAdmin()) {
+      <a href="" 
+        routerLink="/admin"
+        class="bg-yellow-600 py-1 px-3 rounded-lg hover:bg-yellow-700 transition duration-300 ease-in-out"
+      >
+        <fa-icon [icon]="faCrown" class="text-white me-1" />
+        <span>Área Restrita</span>
+      </a>
+    }
   </div>
 </header>
 
