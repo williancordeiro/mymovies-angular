@@ -8,6 +8,7 @@ import { Accout } from './pages/settings/accout/accout';
 import { Notifications } from './pages/settings/notifications/notifications';
 import { adminGuard } from './core/guards/admin-guard';
 import { MovieDetail } from './pages/movie-detail/movie-detail';
+import { AllUsers } from './pages/admin/all-users/all-users';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,12 @@ export const routes: Routes = [
     path: 'admin',
     component: Admin,
     canActivate: [authGuard, adminGuard],
+    children: [
+      {
+        path: 'all-users',
+        component: AllUsers
+      }
+    ]
   },
   {
     path: 'movie/:id',
