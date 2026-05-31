@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function yarn() {
+    yarn install "${@}"
+}
+
+function up() {
+    docker compose up "${@}"
+}
+
+function down() {
+    docker compose down "${@}"
+}
+
+function angular:console {
+    docker compose exec angular bash
+}
+
+function nginx:console {
+    docker compose exec nginx bash
+}
