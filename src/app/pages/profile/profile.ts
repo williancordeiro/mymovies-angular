@@ -10,11 +10,12 @@ import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../core/services/profile.service';
 import { EditAvatar } from "../../components/edit-avatar/edit-avatar";
 import { EditBanner } from "../../components/edit-banner/edit-banner";
+import { DropdownMenu } from "../../components/dropdown-menu/dropdown-menu";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, FontAwesomeModule, EditProfile, EditAvatar, EditBanner],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, EditProfile, EditAvatar, EditBanner, DropdownMenu],
   templateUrl: './profile.html',
 })
 export class Profile implements OnInit {
