@@ -7,24 +7,36 @@ import { Auth } from '../../core/services/auth';
 import { EditProfile } from '../../components/edit-profile/edit-profile';
 import { MovieService } from '../../core/services/movie';
 import { forkJoin } from 'rxjs';
+import { ProfileService } from '../../core/services/profile.service';
+import { EditAvatar } from "../../components/edit-avatar/edit-avatar";
+import { EditBanner } from "../../components/edit-banner/edit-banner";
+import { DropdownMenu } from "../../components/dropdown-menu/dropdown-menu";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, FontAwesomeModule, EditProfile],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, EditProfile, EditAvatar, EditBanner, DropdownMenu],
   templateUrl: './profile.html',
 })
 export class Profile implements OnInit {
   faPencil = faPencil;
   faStar = faStar;
+
   private routerService = inject(Router)
-  private service = inject(Auth);
+  private authService = inject(Auth);
+  private service = inject(ProfileService);
   private movieService = inject(MovieService);
-  userName = computed(() => this.service.currentUser()?.username);
-  userHandle =  computed(() => this.service.currentUser()?.handle);
-  userAvatar = computed(() => this.service.getAvatarUrl(this.service.currentUser()?.avatar_file));
+
+  userName = computed(() => this.authService.currentUser()?.username);
+  userHandle =  computed(() => this.authService.currentUser()?.handle);
+  userAvatar = computed(() => this.service.getAvatarUrl(this.authService.currentUser()?.avatar_file));
+  userBanner = computed(() => this.service.getBannerUrl(this.authService.currentUser()?.banner_file));
+
   public ratedMovies = signal<any[]>([]);
+
   isEditFormOpen = signal(false);
+  isEditAvatarFormOpen = signal(false);
+  isEditBannerFormOpen = signal(false);
 
   ngOnInit() {
     const handle = this.userHandle();

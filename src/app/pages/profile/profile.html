@@ -1,18 +1,45 @@
-<div class="flex flex-col text-white p-1 gap-2 h-full">
-    <div class="px-6 flex flex-row gap-4 items-center h-full py-16">
-        <div class="h-40 w-40 rounded-full border-2 border-white">
-            <img class="h-full w-full rounded-full" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
+<div class="flex flex-col text-white gap-2 h-full">
+    <div class="px-6 relative overflow-hidden flex flex-row gap-4 items-center h-full py-16">
+        <img class="absolute inset-0 w-full h-full object-cover" [src]="userBanner()" />
+        <div class="absolute inset-0 bg-radial from-black/50 to-black"></div>
+        <div class="h-40 w-40 relative z-10 rounded-full border-2 border-accent">
+            <img class="h-full w-full rounded-full bg-background_default object-cover" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col relative z-10">
             <h2 class="font-bold text-2xl">{{ userName() }}</h2>
             <p class="text-neutral-400 text-sm">@{{ userHandle() }}</p>
         </div>
-        <button 
-            class="absolute top-25 right-7 py-2 px-2.5 text-center bg-neutral-800 border-2 border-black shadow-lg shadow-neutral-800 rounded-lg cursor-pointer"
-            (click)="isEditFormOpen.set(true)"
-        >
-            <fa-icon [icon]="faPencil" />
-        </button>
+        <div class="absolute top-2 right-6 z-10">
+            <app-dropdown-menu align="right" title="">
+                <fa-icon dropdown-title [icon]="faPencil" />
+                <div class="cursor-pointer px-1">
+                    <li 
+                        class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out" 
+                        (click)="isEditAvatarFormOpen.set(true)"
+                    >
+                        <p>
+                            Alterar Icone
+                        </p>
+                    </li>
+                    <li 
+                        class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out" 
+                        (click)="isEditBannerFormOpen.set(true)"
+                    >
+                        <p>
+                            Alterar Banner
+                        </p>
+                    </li>
+                    <li 
+                        class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out" 
+                        (click)="isEditFormOpen.set(true)"
+                    >
+                        <p>
+                            Alterar nome de usuário
+                        </p>
+                    </li>
+                </div>
+            </app-dropdown-menu>
+        </div>
     </div>
 
     <div class="w-full md:max-w-7xl lg:max-w-full mx-auto px-6 py-12 border-t-2 border-black">
@@ -45,7 +72,7 @@
                         }
                     </div>
                 } @else {
-                    <div class="w-full h-36 mx-auto flex items-center justify-center bg-neutral-900/50 rounded-brand border border-dashed border-white/10">
+                    <div class="w-full h-38 mx-auto flex items-center justify-center bg-neutral-900/50 rounded-brand border border-dashed border-white/10">
                         <p class="text-lg text-neutral-400">Nenhuma avaliação encontrada</p>
                     </div>
                 }
@@ -65,4 +92,12 @@
 
 @if (isEditFormOpen()) {
     <app-edit-profile (closeForm)="isEditFormOpen.set(false)" />
+}
+
+@if (isEditAvatarFormOpen()) {
+    <app-edit-avatar (closeForm)="isEditAvatarFormOpen.set(false)" />
+}
+
+@if (isEditBannerFormOpen()) {
+    <app-edit-banner (closeForm)="isEditBannerFormOpen.set(false)" />
 }

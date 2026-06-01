@@ -2,12 +2,12 @@ import { Component, inject, output } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Auth } from '../../core/services/auth';
 import { Router } from '@angular/router';
 import { FlashService } from '../../core/services/flash';
 import { FlashMessages } from "../flash-message/flash-message";
 import { ErrorsResponse } from '../../core/models/errors-response';
 import { NgClass } from '@angular/common';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-register-form',
@@ -24,7 +24,7 @@ export class RegisterForm {
   goToLogin = output<void>();
 
   private fb = inject(NonNullableFormBuilder);
-  private authService = inject(Auth);
+  private service = inject(UserService);
   private router = inject(Router);
   private flashService = inject(FlashService);
 
@@ -49,7 +49,7 @@ export class RegisterForm {
   }
 
   onSubmit() {
-    this.authService.register(this.registerForm.getRawValue()).subscribe({
+    this.service.register(this.registerForm.getRawValue()).subscribe({
       next: () => {
         setTimeout(() => {
           this.flashService.clear();

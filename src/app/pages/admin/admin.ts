@@ -1,9 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
 import { Auth } from '../../core/services/auth';
+import { RouterLink, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [RouterModule, RouterLink],
   templateUrl: './admin.html',
 })
 export class Admin {

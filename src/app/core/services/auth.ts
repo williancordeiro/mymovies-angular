@@ -1,11 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { AuthUser, JwtPayload } from '../models/auth.user';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../environments/environment';
-import { ErrorsResponse } from '../models/errors-response';
-import { throwError } from 'rxjs';
+import { handleError } from '../utils/error-handler';
 
 @Injectable({
   providedIn: 'root',
@@ -32,89 +31,16 @@ export class Auth {
           this.decodeAndStoreUser(response.token);
         }
       }),
-      catchError((error: HttpErrorResponse) => {
-        const errors: ErrorsResponse = error.error;
-        return throwError(() => errors);
-      }),
+      catchError(handleError)
     );
   }
 
-  register(credentials: { email: string; username: string; password: string; confirmPassword: string}) {
-    const { confirmPassword, ...data } = credentials;
-    
-    return this.http.post<{ token: string }>(`${this.API_URL}/auth/register`, data)
-      .pipe(
-        tap(response => {
-          if (response.token) {
-            localStorage.setItem(this.TOKEN_KEY, response.token);
-            this.decodeAndStoreUser(response.token);
-          }
-        }),
-        catchError((error: HttpErrorResponse) => {
-          const errors: ErrorsResponse = error.error;
-          return throwError(() => errors);
-        }),
-      );
+  isLoggedIn() {
+    return !!this.currentUser();
   }
 
-  deleteAccount(credentials: { password: string; }) {
-    return this.http.delete(`${this.API_URL}/account/delete`, {body: credentials})
-      .pipe(
-        tap(() => {
-          this.logout();
-        }),
-        catchError((error: HttpErrorResponse) => {
-          const errrors: ErrorsResponse = error.error;
-          return throwError(() => errrors);
-        }),
-      )
-  }
-
-  updateUserNameOrHandle(credentials: { username: string; handle: string; }) {
-    return this.http.put<{ token: string }>(`${this.API_URL}/profile/update`, credentials)
-      .pipe(
-        tap(response => {
-          if (response.token) {
-            localStorage.setItem(this.TOKEN_KEY, response.token);
-            this.decodeAndStoreUser(response.token);
-          }
-        }),
-        catchError((error: HttpErrorResponse) => {
-          const errors: ErrorsResponse = error.error;
-          return throwError(() => errors);
-        }),
-      )
-  }
-
-  updateUserIcon(avatarFile: File) {
-    const formData = new FormData();
-
-    formData.append('avatar_file', avatarFile);
-
-    return this.http.post<{ token: string }>(`${this.API_URL}/change/avatar`, formData).pipe(
-      tap(response => {
-        if (response.token) {
-          localStorage.setItem(this.TOKEN_KEY, response.token);
-          this.decodeAndStoreUser(response.token);
-        }
-      })
-    )
-  }
-
-  changeEmail(credentials: { email: string; password: string; }) {
-    return this.http.put<{ token:string }>(`${this.API_URL}/change/email`, credentials)
-      .pipe(
-        tap(response => {
-          if (response.token) {
-            localStorage.setItem(this.TOKEN_KEY, response.token);
-            this.decodeAndStoreUser(response.token);
-          }
-        }),
-        catchError((error: HttpErrorResponse) => {
-          const errors: ErrorsResponse = error.error;
-          return throwError(() => errors);
-        })
-      )
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
   decodeAndStoreUser(token: string) {
@@ -130,21 +56,14 @@ export class Auth {
     } 
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
-  }
-
-  getAvatarUrl(avatarFile: string | undefined): string {
-    return `${this.API_URL}${avatarFile}`
+  updateSession(token: string) {
+    localStorage.setItem(this.TOKEN_KEY, token);
+    this.decodeAndStoreUser(token);
   }
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
     this.currentUser.set(null);
-  }
-
-  isLoggedIn() {
-    return !!this.currentUser();
   }
 
 }

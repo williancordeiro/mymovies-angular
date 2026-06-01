@@ -1,18 +1,16 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faMagnifyingGlass, faCrown } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faCrown, faUser, faGear, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { Logotipo } from '../logotipo/logotipo';
 import { LoginForm } from '../login-form/login-form';
 import { RegisterForm } from '../register-form/register-form';
 import { Auth } from '../../core/services/auth';
 import { DropdownMenu } from '../dropdown-menu/dropdown-menu';
-import { DropdownModel } from '../../core/models/dropdown.model';
-import { NgClass } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [NgClass, FaIconComponent, Logotipo, LoginForm, RegisterForm, DropdownMenu, RouterLink],
+  imports: [FaIconComponent, Logotipo, LoginForm, RegisterForm, DropdownMenu, RouterLink],
   templateUrl: './header.html',
 })
 export class Header {
@@ -22,7 +20,9 @@ export class Header {
 
   faMagnifyingGlass = faMagnifyingGlass;
   faCrown = faCrown;
-
+  faUser = faUser;
+  faGear = faGear;
+  faPowerOff = faPowerOff;
 
   userLoggedIn = computed(() => !!this.authService.currentUser());
   userName = computed(() => this.authService.currentUser()?.username);

@@ -5,6 +5,7 @@ export interface AuthUser {
     role: string;
     handle: string;
     avatar_file: string;
+    banner_file: string;
 }
 export interface JwtPayload {
     iss: string;
