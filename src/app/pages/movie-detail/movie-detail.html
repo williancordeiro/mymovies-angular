@@ -59,8 +59,8 @@
             <h2 class="text-primary font-bold uppercase tracking-widest text-sm mb-3">Sua Avaliação</h2>
             <div class="flex gap-2 mb-8">
                 @for (star of [1,2,3,4,5]; track star) {
-                    <button (click)="setRating(star)" 
-                            class="text-3xl transition-all hover:scale-125" 
+                    <button (click)="onStarClick(star)" 
+                            class="text-3xl transition-all hover:scale-125 cursor-pointer" 
                             [class.text-primary]="userRating() >= star" 
                             [class.text-white/20]="userRating() < star">
                         <fa-icon [icon]="faStar"></fa-icon>
@@ -102,4 +102,28 @@
         Carregando detalhes do filme...
     </p>
 </div>
+}
+
+@if (isLoginOpen()) {
+    <app-login-form 
+        (closeForm)="isLoginOpen.set(false)"
+        (loginSuccess)="handleLoginSuccess()"
+        (goToRegister)="switchToRegister()"
+    />
+}
+
+@if (isRegisterOpen()) {
+    <app-register-form 
+        (closeForm)="isRegisterOpen.set(false)"
+        (goToLogin)="switchToLogin()"
+    />
+}
+
+@if (isRatingOpen()) {
+    <app-movie-rating
+        [movieId]="movie().id"
+        [userRating]="tempRating()"
+        (ratingSaved)="userRating.set($event)" 
+        (closeForm)="isRatingOpen.set(false)"
+    />
 }
