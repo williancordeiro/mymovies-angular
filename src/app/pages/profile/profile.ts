@@ -8,29 +8,43 @@ import { EditProfile } from '../../components/edit-profile/edit-profile';
 import { MovieService } from '../../core/services/movie';
 import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../core/services/profile.service';
-import { EditAvatar } from "../../components/edit-avatar/edit-avatar";
-import { EditBanner } from "../../components/edit-banner/edit-banner";
-import { DropdownMenu } from "../../components/dropdown-menu/dropdown-menu";
+import { EditAvatar } from '../../components/edit-avatar/edit-avatar';
+import { EditBanner } from '../../components/edit-banner/edit-banner';
+import { DropdownMenu } from '../../components/dropdown-menu/dropdown-menu';
+import { Gallery } from '../../components/gallery/gallery';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, FontAwesomeModule, EditProfile, EditAvatar, EditBanner, DropdownMenu],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FontAwesomeModule,
+    EditProfile,
+    EditAvatar,
+    EditBanner,
+    DropdownMenu,
+    Gallery,
+  ],
   templateUrl: './profile.html',
 })
 export class Profile implements OnInit {
   faPencil = faPencil;
   faStar = faStar;
 
-  private routerService = inject(Router)
+  private routerService = inject(Router);
   private authService = inject(Auth);
   private service = inject(ProfileService);
   private movieService = inject(MovieService);
 
   userName = computed(() => this.authService.currentUser()?.username);
-  userHandle =  computed(() => this.authService.currentUser()?.handle);
-  userAvatar = computed(() => this.service.getAvatarUrl(this.authService.currentUser()?.avatar_file));
-  userBanner = computed(() => this.service.getBannerUrl(this.authService.currentUser()?.banner_file));
+  userHandle = computed(() => this.authService.currentUser()?.handle);
+  userAvatar = computed(() =>
+    this.service.getAvatarUrl(this.authService.currentUser()?.avatar_file),
+  );
+  userBanner = computed(() =>
+    this.service.getBannerUrl(this.authService.currentUser()?.banner_file),
+  );
 
   public ratedMovies = signal<any[]>([]);
 
@@ -45,19 +59,19 @@ export class Profile implements OnInit {
         next: (response) => {
           const ratings = response.ratings;
           if (ratings.length > 0) {
-            const detailRequests = ratings.map((r: any) => 
-               this.movieService.getMovieById(r.movie_id)
+            const detailRequests = ratings.map((r: any) =>
+              this.movieService.getMovieById(r.movie_id),
             );
 
             forkJoin<any[]>(detailRequests).subscribe((details: any[]) => {
               const enrichedMovies = details.map((d, index) => ({
                 ...d.movie,
-                user_rating: ratings[index].rating
+                user_rating: ratings[index].rating,
               }));
               this.ratedMovies.set(enrichedMovies);
             });
           }
-        }
+        },
       });
     }
   }

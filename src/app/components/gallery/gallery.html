@@ -1,0 +1,27 @@
+<div class="grid grid-cols-3 gap-3">
+  @for (img of images(); track img.id) {
+    <div class="relative group">
+      <img [src]="service.getGalleryUrl(img.url)" class="w-full h-40 object-cover rounded-lg" />
+      <button
+        (click)="remove(img.id)"
+        class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-7 h-7 opacity-0 group-hover:opacity-100 transition"
+      >
+        ✕
+      </button>
+    </div>
+  } @empty {
+    <p class="text-neutral-400 col-span-3">Nenhuma imagem na galeria ainda.</p>
+  }
+</div>
+
+<input type="file" #fileInput class="hidden" (change)="onFileSelected($event)" accept="image/*" />
+<button
+  (click)="fileInput.click()"
+  class="mt-4 bg-accent text-white px-4 py-2 rounded uppercase font-bold"
+>
+  Adicionar imagem
+</button>
+
+@if (error()) {
+  <span class="text-red-600 text-sm">{{ error() }}</span>
+}

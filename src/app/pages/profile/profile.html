@@ -1,103 +1,112 @@
 <div class="flex flex-col text-white gap-2 h-full">
-    <div class="px-6 relative overflow-hidden flex flex-row gap-4 items-center h-full py-16">
-        <img class="absolute inset-0 w-full h-full object-cover" [src]="userBanner()" />
-        <div class="absolute inset-0 bg-radial from-black/50 to-black"></div>
-        <div class="h-40 w-40 relative z-10 rounded-full border-2 border-accent">
-            <img class="h-full w-full rounded-full bg-background_default object-cover" [src]="userAvatar()" [alt]="userName()?.toLocaleLowerCase()">
-        </div>
-        <div class="flex flex-col relative z-10">
-            <h2 class="font-bold text-2xl">{{ userName() }}</h2>
-            <p class="text-neutral-400 text-sm">@{{ userHandle() }}</p>
-        </div>
-        <div class="absolute top-2 right-6 z-10">
-            <app-dropdown-menu align="right" title="">
-                <fa-icon dropdown-title [icon]="faPencil" />
-                <div class="cursor-pointer px-1">
-                    <li 
-                        class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out" 
-                        (click)="isEditAvatarFormOpen.set(true)"
-                    >
-                        <p>
-                            Alterar Icone
-                        </p>
-                    </li>
-                    <li 
-                        class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out" 
-                        (click)="isEditBannerFormOpen.set(true)"
-                    >
-                        <p>
-                            Alterar Banner
-                        </p>
-                    </li>
-                    <li 
-                        class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out" 
-                        (click)="isEditFormOpen.set(true)"
-                    >
-                        <p>
-                            Alterar nome de usuário
-                        </p>
-                    </li>
-                </div>
-            </app-dropdown-menu>
-        </div>
+  <div class="px-6 relative overflow-hidden flex flex-row gap-4 items-center h-full py-16">
+    <img class="absolute inset-0 w-full h-full object-cover" [src]="userBanner()" />
+    <div class="absolute inset-0 bg-radial from-black/50 to-black"></div>
+    <div class="h-40 w-40 relative z-10 rounded-full border-2 border-accent">
+      <img
+        class="h-full w-full rounded-full bg-background_default object-cover"
+        [src]="userAvatar()"
+        [alt]="userName()?.toLocaleLowerCase()"
+      />
     </div>
-
-    <div class="w-full md:max-w-7xl lg:max-w-full mx-auto px-6 py-12 border-t-2 border-black">
-        
-        <div class="flex flex-col gap-12">
-
-            <div class="w-full">
-                <h2 class="text-2xl font-black mb-8 uppercase tracking-tighter text-accent">Últimas Avaliações</h2>
-                
-                @if (ratedMovies().length > 0) {
-                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                        @for (movie of ratedMovies(); track movie.id) {
-                            <div [routerLink]="['/movie', movie.id]" class="group cursor-pointer relative bg-neutral-900 rounded-brand overflow-hidden border border-white/5 hover:border-primary/50 transition-all shadow-lg">
-                                <!-- Banner/Poster -->
-                                <div class="aspect-[2/3] relative">
-                                    <img [src]="'https://image.tmdb.org/t/p/w342' + movie.poster_path" 
-                                         [alt]="movie.title"
-                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                                    
-                                    <!-- User Rating Overlay -->
-                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-primary text-sm font-bold border border-primary/30 flex items-center gap-1">
-                                        <fa-icon [icon]="faStar"></fa-icon>
-                                        {{ movie.user_rating }}
-                                    </div>
-                                </div>
-                                <div class="p-3">
-                                    <h3 class="text-xs font-bold truncate text-neutral-300" [title]="movie.title">{{ movie.title }}</h3>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                } @else {
-                    <div class="w-full h-38 mx-auto flex items-center justify-center bg-neutral-900/50 rounded-brand border border-dashed border-white/10">
-                        <p class="text-lg text-neutral-400">Nenhuma avaliação encontrada</p>
-                    </div>
-                }
-            </div>
-
-            <div class="w-full">
-                <h2 class="text-2xl font-black mb-8 uppercase tracking-tighter text-accent">Minhas Listas</h2>
-                <div class="w-full h-32 mx-auto flex items-center justify-center">
-                    <p class="text-lg text-neutral-400">Sem listas</p>
-                </div>
-            </div>
-
-        </div>
-
+    <div class="flex flex-col relative z-10">
+      <h2 class="font-bold text-2xl">{{ userName() }}</h2>
+      <p class="text-neutral-400 text-sm">@{{ userHandle() }}</p>
     </div>
+    <div class="absolute top-2 right-6 z-10">
+      <app-dropdown-menu align="right" title="">
+        <fa-icon dropdown-title [icon]="faPencil" />
+        <div class="cursor-pointer px-1">
+          <li
+            class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out"
+            (click)="isEditAvatarFormOpen.set(true)"
+          >
+            <p>Alterar Icone</p>
+          </li>
+          <li
+            class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out"
+            (click)="isEditBannerFormOpen.set(true)"
+          >
+            <p>Alterar Banner</p>
+          </li>
+          <li
+            class="py-1 hover:font-semibold hover:text-accent transition duration-300 ease-in-out"
+            (click)="isEditFormOpen.set(true)"
+          >
+            <p>Alterar nome de usuário</p>
+          </li>
+        </div>
+      </app-dropdown-menu>
+    </div>
+  </div>
+
+  <div class="w-full md:max-w-7xl lg:max-w-full mx-auto px-6 py-12 border-t-2 border-black">
+    <div class="flex flex-col gap-12">
+      <div class="w-full">
+        <h2 class="text-2xl font-black mb-8 uppercase tracking-tighter text-accent">
+          Últimas Avaliações
+        </h2>
+
+        @if (ratedMovies().length > 0) {
+          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            @for (movie of ratedMovies(); track movie.id) {
+              <div
+                [routerLink]="['/movie', movie.id]"
+                class="group cursor-pointer relative bg-neutral-900 rounded-brand overflow-hidden border border-white/5 hover:border-primary/50 transition-all shadow-lg"
+              >
+                <!-- Banner/Poster -->
+                <div class="aspect-[2/3] relative">
+                  <img
+                    [src]="'https://image.tmdb.org/t/p/w342' + movie.poster_path"
+                    [alt]="movie.title"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+
+                  <!-- User Rating Overlay -->
+                  <div
+                    class="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-primary text-sm font-bold border border-primary/30 flex items-center gap-1"
+                  >
+                    <fa-icon [icon]="faStar"></fa-icon>
+                    {{ movie.user_rating }}
+                  </div>
+                </div>
+                <div class="p-3">
+                  <h3 class="text-xs font-bold truncate text-neutral-300" [title]="movie.title">
+                    {{ movie.title }}
+                  </h3>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div
+            class="w-full h-38 mx-auto flex items-center justify-center bg-neutral-900/50 rounded-brand border border-dashed border-white/10"
+          >
+            <p class="text-lg text-neutral-400">Nenhuma avaliação encontrada</p>
+          </div>
+        }
+      </div>
+
+      <div class="w-full">
+        <h2 class="text-2xl font-black mb-8 uppercase tracking-tighter text-accent">
+          Minhas Listas
+        </h2>
+        <div class="w-full h-32 mx-auto flex items-center justify-center">
+          <app-gallery />
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 @if (isEditFormOpen()) {
-    <app-edit-profile (closeForm)="isEditFormOpen.set(false)" />
+  <app-edit-profile (closeForm)="isEditFormOpen.set(false)" />
 }
 
 @if (isEditAvatarFormOpen()) {
-    <app-edit-avatar (closeForm)="isEditAvatarFormOpen.set(false)" />
+  <app-edit-avatar (closeForm)="isEditAvatarFormOpen.set(false)" />
 }
 
 @if (isEditBannerFormOpen()) {
-    <app-edit-banner (closeForm)="isEditBannerFormOpen.set(false)" />
+  <app-edit-banner (closeForm)="isEditBannerFormOpen.set(false)" />
 }

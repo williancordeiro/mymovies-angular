@@ -1,0 +1,57 @@
+<div 
+    class="fixed inset-0 bg-background_black/80 z-40 flex justify-center items-center p-4"
+    (click)="closeForm.emit()"
+>
+    <div 
+        class="bg-[#121212] rounded-xl p-6 w-full max-w-155 z-50 shadow-2xl border border-neutral-900 flex flex-col gap-6" 
+        (click)="$event.stopPropagation()"
+    >
+        <div class="flex flex-col items-center justify-center">
+            <h1 class="text-accent font-bold text-3xl mb-1 tracking-tight">Minha Nota</h1>
+            <h3 class="text-neutral-400 text-[9px] tracking-[0.2em] uppercase text-center mt-1">Qual sua nota para o filme?</h3>
+        </div>
+        <div class="border border-neutral-950 w-full rounded-lg"></div>
+
+        <app-flash-message [isGlobal]="false" />
+        
+        <div class="flex flex-row w-full gap-3">
+
+            <!-- Avaliação -->
+            <div class="flex flex-col px-3 gap-4 w-full items-center justify-center">
+                
+                <div class="flex justify-center gap-3 mb-6">
+                    @for (star of [1,2,3,4,5]; track star) {
+                        <button 
+                            (click)="tempRating.set(star)" 
+                            class="text-4xl transition-all hover:scale-125 cursor-pointer" 
+                            [class.text-accent]="tempRating() >= star" 
+                            [class.text-white/20]="tempRating() < star"
+                        >
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </button>
+                    }
+                </div>
+                <span class="text-neutral-400 text-sm font-bold">
+                    {{ tempRating() > 0 ? 'Sua nota: ' + tempRating() : 'Não avaliado' }}
+                </span>
+
+                <div class="mt-4.5 w-full flex flex-col gap-2">
+                    <button 
+                        type="button"
+                        (click)="onRatingSaved()"
+                        class="w-full bg-accent hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-2.5 transition-all duration-200 cursor-pointer"
+                    >
+                        Enviar
+                    </button>
+                    <button 
+                        type="button"
+                        (click)="closeForm.emit()"
+                        class="w-full bg-neutral-500 hover:brightness-110 text-white rounded-md uppercase font-bold tracking-wider py-2.5 transition-all duration-200 cursor-pointer"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
