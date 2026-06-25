@@ -12,7 +12,9 @@
         
         <!-- Lado Esquerdo: Poster + Ações Rápidas -->
         <div class="w-full md:w-80 flex-shrink-0">
-            <img [src]="'https://image.tmdb.org/t/p/w500' + movie().poster_path" [alt]="movie().title"
+            <img [src]="'/posters' + movie().poster_path"
+                 (error)="$event.target.onerror=null; $event.target.src='https://image.tmdb.org/t/p/w500' + movie().poster_path"
+                 [alt]="movie().title"
                  class="w-full rounded-brand shadow-[0_20px_50px_rgba(250,92,21,0.5)] mb-6 border border-white/5">
             
             <!-- Botões de Ação Social -->

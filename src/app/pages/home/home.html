@@ -18,8 +18,10 @@
 
             <!-- imagem do filme -->
             <div class="aspect-[2/3] overflow-hidden">
-                <!-- junta a URL base da imagem do TMDB com o final -->
-                <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title"
+                <!-- pôster local (offline) com fallback para o TMDB (online) -->
+                <img [src]="'/posters' + movie.poster_path"
+                    (error)="$event.target.onerror=null; $event.target.src='https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                    [alt]="movie.title"
                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
             </div>
 

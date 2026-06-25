@@ -6,7 +6,6 @@ import { faPencil, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '../../core/services/auth';
 import { EditProfile } from '../../components/edit-profile/edit-profile';
 import { MovieService } from '../../core/services/movie';
-import { forkJoin } from 'rxjs';
 import { ProfileService } from '../../core/services/profile.service';
 import { EditAvatar } from '../../components/edit-avatar/edit-avatar';
 import { EditBanner } from '../../components/edit-banner/edit-banner';
@@ -57,20 +56,15 @@ export class Profile implements OnInit {
     if (handle) {
       this.movieService.getUserRatings(handle).subscribe({
         next: (response) => {
-          const ratings = response.ratings;
-          if (ratings.length > 0) {
-            const detailRequests = ratings.map((r: any) =>
-              this.movieService.getMovieById(r.movie_id),
-            );
-
-            forkJoin<any[]>(detailRequests).subscribe((details: any[]) => {
-              const enrichedMovies = details.map((d, index) => ({
-                ...d.movie,
-                user_rating: ratings[index].rating,
-              }));
-              this.ratedMovies.set(enrichedMovies);
-            });
-          }
+          const enrichedMovies = (response.ratings ?? []).map((r: any) => ({
+            id: r.movie_id,
+            title: r.title,
+            poster_path: r.poster_path,
+            release_date: r.release_date,
+            vote_average: r.vote_average,
+            user_rating: r.rating,
+          }));
+          this.ratedMovies.set(enrichedMovies);
         },
       });
     }
