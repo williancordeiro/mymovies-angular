@@ -35,6 +35,28 @@
                     {{ tempRating() > 0 ? 'Sua nota: ' + tempRating() : 'Não avaliado' }}
                 </span>
 
+                <div class="flex flex-col gap-2 w-full" [formGroup]="tagsControl">
+                    <label for="tags" class="text-neutral-400 text-sm font-bold">Tags</label>
+                    
+                    <div class="flex flex-wrap gap-2">
+
+                        @for (tag of allTags(); track tag.id) {
+                            <button
+                                type="button"
+                                (click)="toogleTag(tag.id)"
+                                class="bg-neutral-800 text-neutral-300 text-sm rounded-2xl p-1 border-2 border-dotted border-neutral-600 cursor-pointer"
+                                [ngClass]="{
+                                    'bg-accent/20 text-accent border-accent font-semibold': tagsControl.controls.tags.value.includes(tag.id),
+                                    'bg-neutral-800 text-neutral-300 border-dotted border-neutral-600': !tagsControl.controls.tags.value.includes(tag.id)
+                                }"
+                            >
+                                {{ tag.description }}
+                            </button>
+                        }
+
+                    </div>
+                </div>
+
                 <div class="mt-4.5 w-full flex flex-col gap-2">
                     <button 
                         type="button"
