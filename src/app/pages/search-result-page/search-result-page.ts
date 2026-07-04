@@ -16,7 +16,6 @@ export class SearchResultPage implements OnInit {
   currentPage = signal(1);
   itemsPerPage = 15;
 
-  // Compute paginated results based on full results from service
   paginatedResults = computed(() => {
     const start = (this.currentPage() - 1) * this.itemsPerPage;
     return this.searchService.results().slice(start, start + this.itemsPerPage);
