@@ -8,10 +8,8 @@
         <p class="text-secondary mt-2 text-lg">Os títulos mais populares do momento na nossa plataforma.</p>
     </div>
 
-    <!-- grid responsivo para os cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
-        <!-- laço de repetição do Angular -->
         @for (movie of movies(); track movie.id) {
             <app-card-movie [movie]="movie" />
         }
