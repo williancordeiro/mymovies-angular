@@ -15,7 +15,6 @@ export class SearchService {
   isLoading = signal<boolean>(false);
   query = signal<string>('');
   
-  // Novo signal para controlar se está apenas esperando o limite de caracteres
   isWaitingForInput = signal<boolean>(false);
 
   constructor() {
@@ -65,7 +64,6 @@ export class SearchService {
 
   setQuery(newQuery: string) {
     this.query.set(newQuery);
-    // Notifica para atualizar o estado de 'Procurando...'
     this.searchSubject.next(newQuery);
   }
 
