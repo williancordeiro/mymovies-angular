@@ -6,4 +6,9 @@ export interface Movie {
     mymovies_rating_average: number;
     user_rating: number;
     release_date: string;
+    overview: string;
+}
+
+export interface ResultResponse {
+    results: Movie[];
 }
