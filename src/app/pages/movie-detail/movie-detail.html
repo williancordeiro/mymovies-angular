@@ -4,14 +4,14 @@
     <!-- Banner de Fundo (Backdrop) com Overlay Gradiente -->
     <div class="absolute inset-0 z-0 opacity-30">
         <img [src]="'https://image.tmdb.org/t/p/original' + movie().backdrop_path" class="w-full h-full object-cover blur-sm" [alt]="movie().title">
-        <div class="absolute inset-0 bg-gradient-to-t from-background_default via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-background_default via-transparent to-transparent"></div>
     </div>
 
     <!-- Conteúdo Principal -->
     <div class="relative z-10 p-8 pt-12 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
         
         <!-- Lado Esquerdo: Poster + Ações Rápidas -->
-        <div class="w-full md:w-80 flex-shrink-0">
+        <div class="w-full md:w-80 shrink-0">
             <img [src]="'https://image.tmdb.org/t/p/w500' + movie().poster_path" [alt]="movie().title"
                  class="w-full rounded-brand shadow-[0_20px_50px_rgba(250,92,21,0.5)] mb-6 border border-white/5">
             
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Lado Direito: Informações e Avaliação -->
-        <div class="flex-grow">
+        <div class="grow">
             <button routerLink="/" class="text-secondary/60 hover:text-primary mb-4 flex items-center gap-2 transition-colors font-bold group">
                 <fa-icon [icon]="faChevronLeft" class="transition-transform group-hover:-translate-x-1"></fa-icon>
                 Voltar para a Galeria
