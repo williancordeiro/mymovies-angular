@@ -1,0 +1,35 @@
+<div [routerLink]="['/movie', movie.id]"
+    class="group cursor-pointer relative bg-background_black rounded-brand overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:shadow-accent/20 hover:shadow-2xl">
+
+    <!-- imagem do filme -->
+    <div class="aspect-[2/3] overflow-hidden">
+        <!-- junta a URL base da imagem do TMDB com o final -->
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+    </div>
+
+    <!-- informacoes do filme -->
+    <div class="p-4">
+        <!-- titulo do filme -->
+        <h3 class="font-headline text-lg font-bold text-secondary truncate" [title]="movie.title">
+            {{ movie.title }}
+        </h3>
+
+        <div class="flex items-center justify-between mt-3">
+            <span
+                class="inline-flex items-center px-2 py-1 rounded-brand text-xs font-bold bg-accent/10 text-accent border border-accent/20 gap-1">
+                <fa-icon [icon]="faStar"></fa-icon>
+                {{ movie.mymovies_rating_average | number:'1.1-1' }}
+            </span>
+
+            <span class="text-sm text-secondary opacity-75 font-body">
+                {{ movie.release_date | date:'yyyy' }}
+            </span>
+        </div>
+    </div>
+
+    <div
+        class="absolute inset-0 border-2 border-transparent group-hover:border-accent/50 rounded-brand transition-colors duration-300 pointer-events-none">
+    </div>
+
+</div>
