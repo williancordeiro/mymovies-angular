@@ -14,7 +14,7 @@ export class SearchResultPage implements OnInit {
   private route = inject(ActivatedRoute);
   
   currentPage = signal(1);
-  itemsPerPage = 15;
+  itemsPerPage = 10;
 
   paginatedResults = computed(() => {
     const start = (this.currentPage() - 1) * this.itemsPerPage;
