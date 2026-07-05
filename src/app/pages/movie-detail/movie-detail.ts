@@ -8,6 +8,7 @@ import { Auth } from '../../core/services/auth';
 import { LoginForm } from '../../components/login-form/login-form';
 import { RegisterForm } from '../../components/register-form/register-form';
 import { MovieRating } from '../../components/movie-rating/movie-rating';
+import { Tag } from '../../core/models/tag';
 
 @Component({
   selector: 'app-movie-detail',
@@ -32,6 +33,7 @@ export class MovieDetail implements OnInit {
   public movie = signal<any>(null);
   public isFavorite = signal<boolean>(false);
   public userRating = signal<number>(0);
+  public userTags = signal<Tag[]>([]);
   public showModal = signal<boolean>(false);
   public isRatingOpen = signal<boolean>(false);
   public isLoginOpen = signal<boolean>(false);
@@ -55,6 +57,12 @@ export class MovieDetail implements OnInit {
             this.userRating.set(0);
             this.tempRating.set(0);
           }
+
+          if (movieData.user_rating_tags) {
+            this.userTags.set(movieData.user_rating_tags);
+          } else {
+            this.userTags.set([]);
+          }
         },
         error: (err) => console.error('Requisition failed:', err)
       });
@@ -75,16 +83,6 @@ export class MovieDetail implements OnInit {
     }
   }
 
-  /*setRating(star: number) {
-    this.userRating.set(star);
-    const movieId = this.movie().id;
-
-    this.movieService.saveRating(movieId, star).subscribe({
-      next: () => console.log('Nota salva com sucesso!'),
-      error: (err) => alert('Erro ao salvar nota. Você está logado?')
-    });
-  }*/
-
   openModal() {
     this.showModal.set(true);
   }
@@ -92,6 +90,28 @@ export class MovieDetail implements OnInit {
   handleLoginSuccess() {
     this.isLoginOpen.set(false);
     this.isRatingOpen.set(true);
+  }
+
+  refreshMovie() {
+    const id = this.movie().id;
+    this.movieService.getMovieById(Number(id)).subscribe({
+      next: (response) => {
+        const movieData = response.movie;
+        this.movie.set(movieData);
+
+        if (movieData.user_rating) {
+          this.userRating.set(movieData.user_rating);
+          this.tempRating.set(movieData.user_rating);
+        }
+
+        if (movieData.user_rating_tags) {
+          this.userTags.set(movieData.user_rating_tags);
+        } else {
+          this.userTags.set([]);
+        }
+      },
+      error: (err) => console.error('Requisition failed:', err)
+    });
   }
 
   switchToRegister() {

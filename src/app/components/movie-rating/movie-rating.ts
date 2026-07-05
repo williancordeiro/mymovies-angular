@@ -24,6 +24,8 @@ export class MovieRating {
   userRating = input<number>(0);
   ratingSaved = output<number>();
   tempRating = signal<number>(0);
+  userTags = input<Tag[]>([]);
+  tempTags = signal<number[]>([]);
   selectedTags = signal<string>('');
 
   closeForm = output<void>();
@@ -36,9 +38,12 @@ export class MovieRating {
 
   ngOnInit() {
     this.tempRating.set(this.userRating());
+
+    const existingTagIds = this.userTags().map(tag => tag.id);
+    this.tagsControl.controls.tags.setValue(existingTagIds);
+
     this.service.getAllTags().subscribe({
       next: (tags) => {
-        //console.log('Tags recebidas:', respose);
         this.allTags.set(tags);
       },
       error: (err) => {

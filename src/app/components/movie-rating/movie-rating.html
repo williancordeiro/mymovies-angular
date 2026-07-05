@@ -36,9 +36,9 @@
                 </span>
 
                 <div class="flex flex-col gap-2 w-full" [formGroup]="tagsControl">
-                    <label for="tags" class="text-neutral-400 text-sm font-bold">Tags</label>
+                    <label for="tags" class="text-neutral-400 text-base font-bold">Tags</label>
                     
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-wrap gap-2 justify-center">
 
                         @for (tag of allTags(); track tag.id) {
                             <button
