@@ -1,0 +1,39 @@
+<div class="flex flex-col items-center p-4 sm:p-8 lg:px-16 text-white min-h-screen">
+  <h1 class="text-3xl font-bold mb-8">Resultados da busca: "{{ searchService.query() }}"</h1>
+
+  @if (searchService.isLoading()) {
+    <p class="text-neutral-400">Carregando resultados...</p>
+  } @else {
+    <!-- Layout Vertical para resultados de busca - max-w removido ou ajustado -->
+    <div class="flex flex-col gap-4 w-full">
+      @for (movie of paginatedResults(); track movie.id) {
+        <app-card-movie-search-result [movie]="movie" />
+      } @empty {
+        <p class="text-neutral-400">Nenhum resultado encontrado.</p>
+      }
+    </div>
+
+    <!-- Paginação -->
+    @if (totalPages() > 1) {
+      <div class="flex justify-center items-center gap-2 mt-12">
+        <button 
+          (click)="goToPage(currentPage() - 1)" 
+          [disabled]="currentPage() === 1"
+          class="px-6 py-3 bg-neutral-800 rounded-lg disabled:opacity-50 hover:bg-neutral-700 transition cursor-pointer font-bold"
+        >
+          Anterior
+        </button>
+        
+        <span class="text-neutral-400 font-medium">Página {{ currentPage() }} de {{ totalPages() }}</span>
+        
+        <button 
+          (click)="goToPage(currentPage() + 1)" 
+          [disabled]="currentPage() === totalPages()"
+          class="px-6 py-3 bg-neutral-800 rounded-lg disabled:opacity-50 hover:bg-neutral-700 transition cursor-pointer font-bold"
+        >
+          Próxima
+        </button>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,51 @@
+<div 
+  class="absolute top-full left-0 w-full z-50 bg-black/50 backdrop-blur-md border border-neutral-700/50 rounded-b-xl overflow-hidden shadow-2xl"
+  (click)="$event.stopPropagation()"
+>
+    <div class="max-h-96 overflow-y-auto">
+      @if (searchService.isLoading()) {
+        <div class="p-8 text-center text-neutral-400">Buscando filmes...</div>
+      } @else if (searchService.isWaitingForInput()) {
+        <div class="p-8 text-center text-neutral-400">Procurando filmes...</div>
+      } @else {
+        <ul class="divide-y divide-neutral-700/50">
+          @for (movie of searchService.results().slice(0, 10); track movie.id) {
+            <li class="result-item">
+              <a [routerLink]="['/movie', movie.id]" (click)="closeModal.emit()" class="flex items-center gap-4 p-3 hover:bg-neutral-800/80 transition cursor-pointer">
+                <div class="w-12 h-16 bg-neutral-700 rounded overflow-hidden shrink-0">
+                  @if (movie.poster_path) {
+                    <img [src]="'https://image.tmdb.org/t/p/w92' + movie.poster_path" alt="{{ movie.title }}" class="w-full h-full object-cover">
+                  }
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">{{ movie.title }}</h4>
+                  <p class="text-xs text-neutral-400">{{ movie.release_date | date:'yyyy' }}</p>
+                </div>
+              </a>
+            </li>
+          } @empty {
+            @if (searchService.query().trim().length > 0) {
+              <li class="p-8 text-center text-neutral-500">
+                Nenhum filme encontrado para "{{ searchService.query() }}"
+              </li>
+            } @else {
+              <li class="p-8 text-center text-neutral-500">Comece a digitar...</li>
+            }
+          }
+          
+          @if (searchService.totalResults() > 10) {
+            <li class="p-2">
+              <a 
+                routerLink="/search/result" 
+                [queryParams]="{q: searchService.query()}"
+                (click)="closeModal.emit()"
+                class="block w-full text-center p-2 text-sm text-accent hover:text-white hover:bg-neutral-800/80 rounded-lg transition cursor-pointer font-semibold"
+              >
+                Exibir todos os resultados
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+</div>

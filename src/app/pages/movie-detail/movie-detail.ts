@@ -75,16 +75,6 @@ export class MovieDetail implements OnInit {
     }
   }
 
-  /*setRating(star: number) {
-    this.userRating.set(star);
-    const movieId = this.movie().id;
-
-    this.movieService.saveRating(movieId, star).subscribe({
-      next: () => console.log('Nota salva com sucesso!'),
-      error: (err) => alert('Erro ao salvar nota. Você está logado?')
-    });
-  }*/
-
   openModal() {
     this.showModal.set(true);
   }

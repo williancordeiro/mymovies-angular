@@ -9,6 +9,7 @@ import { Notifications } from './pages/settings/notifications/notifications';
 import { adminGuard } from './core/guards/admin-guard';
 import { MovieDetail } from './pages/movie-detail/movie-detail';
 import { AllUsers } from './pages/admin/all-users/all-users';
+import { SearchResultPage } from './pages/search-result-page/search-result-page';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,10 @@ export const routes: Routes = [
     path: 'home',
     redirectTo: '',
     pathMatch: 'full',
+  },
+  {
+    path: 'search/result',
+    component: SearchResultPage,
   },
   {
     path: 'profile/:username',

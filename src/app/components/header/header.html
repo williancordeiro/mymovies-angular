@@ -4,12 +4,15 @@
   <div class="cursor-pointer" routerLink="/">
     <app-logotipo></app-logotipo>
   </div>
-  <div class="flex flex-row w-full max-w-175 rounded-lg">
+  <div class="relative flex flex-row w-full max-w-175 rounded-lg">
     <input
       type="search"
       name="search"
-      id="search"
+      #search
       placeholder="Pesquisar filmes..."
+      [value]="searchService.query()"
+      (input)="onSearchInput($event)"
+      (keyup.enter)="onSearchEnter($event)"
       class="rounded-s-lg bg-neutral-100 text-neutral-900 p-2 w-full outline-none focus:ring-2 focus:ring-accent"
     />
     <button
@@ -21,6 +24,12 @@
         class="text-neutral-600 hover:text-accent transition duration-300 ease-in-out"
       ></fa-icon>
     </button>
+
+    @if (showSearchModal()) {
+      <div class="fixed inset-0 z-40" (click)="showSearchModal.set(false)"></div>
+      <app-modal-search (closeModal)="showSearchModal.set(false)" />
+    }
+
   </div>
   <div class="flex gap-4 items-center text-white">
     @if (userLoggedIn()) {
